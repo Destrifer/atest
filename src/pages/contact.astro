@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
+import Form from "@components/Form.astro";
 const h1 = "Контакты";
 const title = "Контакты | Аренда авто в Крыму Car on Time";
 const description =
@@ -11,7 +12,7 @@ const description =
 	<div
 		class="flex justify-center items-center py-8 gap-4 container mx-auto flex-wrap"
 	>
-		<div class="">
+		<div class="md:w-[48%]">
 			<ul class="self-start space-y-2">
 				<li class="flex">
 					<div
@@ -90,34 +91,9 @@ const description =
 			</p>
 		</div>
 
-		<div>
+		<div class="md:w-[48%]">
 			<p class="pb-4 text-3xl text-center font-bold">Обратная связь</p>
-			<form
-				class="self-start w-50 flex flex-col sm:flex-row sm:flex-wrap sm:gap-4 gap-4"
-			>
-				<input
-					type="text"
-					name="name"
-					required
-					placeholder="Имя:"
-					class="w-full sm:w-[48%] p-2 border text-black"
-				/>
-				<input
-					type="email"
-					name="email"
-					required
-					placeholder="Email:"
-					class="w-full sm:w-[48%] p-2 border text-black"
-				/>
-				<textarea
-					name="message"
-					required
-					placeholder="Сообщение:"
-					class="w-full p-2 border text-black h-48"></textarea>
-				<button type="submit" class="w-full bg-red-600 p-2 text-white w-auto"
-					>Отправить</button
-				>
-			</form>
+			<Form />
 		</div>
 	</div>
 	<script
