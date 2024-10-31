@@ -1,5 +1,8 @@
 ---
+import { getCollection } from "astro:content";
 
+const apiFoods = await getCollection("apiFood");
+console.log("Data from getCollection:", apiFoods);
 ---
 
 <html lang="en">
@@ -10,7 +13,9 @@
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
-	<body>
-		<h1>Astro</h1>
+	<body class="container py-4">
+		<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 items-start">
+			<pre>{JSON.stringify(apiFoods, null, 2)}</pre>
+		</div>
 	</body>
 </html>
