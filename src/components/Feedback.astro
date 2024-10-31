@@ -1,33 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
 import Form from "./Form.astro";
-// Компонент Icon.astro
-interface Props {
-	name: string;
-	size?: number | string;
-}
-
-const { name, size }: Props = Astro.props;
-// Обычная функция без типизации
-const handleSubmit = async (event) => {
-	event.preventDefault();
-
-	const formData = new FormData(event.target);
-
-	try {
-		// Отправка данных на сервер через ky
-		/*const response = await ky
-			.post("/api/send-email", {
-				body: formData,
-			})
-			.json();*/
-
-		alert(response.message); // Сообщение об успешной отправке
-	} catch (error) {
-		console.error("Ошибка отправки:", error);
-		alert("Произошла ошибка при отправке.");
-	}
-};
 ---
 
 <div
