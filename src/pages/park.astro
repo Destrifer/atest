@@ -4,10 +4,14 @@ import { getCollection } from "astro:content";
 const cars = await getCollection("apiCars");
 import Layout from "../layouts/Layout.astro";
 import CarCard from "@components/CarCard.astro";
-const title = "Условия аренды автомобиля"; // Заголовок для этой страницы
+const h1 = "Прокат авто в Крыму без водителя";
+const title =
+	"Парк авто - аренда авто без водителя | Аренда авто в Крыму Car on Time";
+const description =
+	"Парк авто - аренда авто без водителя | Взять напрокат автомобиль, Крым компания CAR ON TIME. Аренда - это удобный вариант передвижения по Крыму.";
 ---
 
-<Layout title={title}>
+<Layout title={title} description={description} h1={h1}>
 	<div class="container mx-auto">
 		<!-- Фильтр по классам авто с кнопками -->
 		<div class="filter-section m-4 flex flex-wrap gap-2 justify-center">

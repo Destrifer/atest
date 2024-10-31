@@ -2,13 +2,15 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 const vehicles = await getCollection("apiCars");
-const title = "Главная";
 // Получение параметра id из URL и данных машины из коллекции
 const { id } = Astro.params;
 const vehicle = vehicles.find((v: any) => v.data.id === id);
+let h1 = `${vehicle.data.model} - Прокат автомобиля в Крыму`;
+const title = `Аренда авто ${vehicle.data.model} в Крыму Car on Time`;
+const description = `Взять напрокат автомобиль ${vehicle.data.model}, Крым компания CAR ON TIME. Аренда - это удобный вариант передвижения по Крыму.`;
 ---
 
-<Layout title={title}>
+<Layout title={title} description={description} h1={h1}>
 	<div class="car-order-page flex flex-wrap gap-4 justify-center">
 		<div class="w-full lg:max-w-[800px] relative">
 			<div class="siema">

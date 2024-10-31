@@ -2,7 +2,7 @@
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
 
-const { title, showTitle = true } = Astro.props;
+const { title, description, h1, showTitle = true } = Astro.props;
 ---
 
 <html lang="en">
@@ -11,7 +11,12 @@ const { title, showTitle = true } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title || "Astro"}</title>
+		<meta
+			name="description"
+			content={description ||
+				"Взять напрокат автомобиль, Крым компания CAR ON TIME. Аренда - это удобный вариант передвижения по Крыму."}
+		/>
+		<title>{title || "Аренда авто в Крыму Car on Time"}</title>
 	</head>
 	<body class="flex flex-col min-h-screen pb-4">
 		<Header />
@@ -19,7 +24,7 @@ const { title, showTitle = true } = Astro.props;
 			{
 				showTitle && (
 					<h1 class="text-3xl font-bold shadow-up py-8 relative decorated-title uppercase">
-						{title}
+						{h1}
 					</h1>
 				)
 			}

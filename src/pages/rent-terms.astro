@@ -1,10 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
-const title = "Условия аренды автомобиля"; // Заголовок для этой страницы
+const h1 = "Условия аренды";
+const title = "Условия аренды | Аренда авто в Крыму Car on Time";
+const description =
+	"Условия аренды | Взять напрокат автомобиль, Крым компания CAR ON TIME. Аренда - это удобный вариант передвижения по Крыму.";
 ---
 
-<Layout title={title}>
+<Layout title={title} description={description} h1={h1}>
 	<div class="grid-container m-4 text-lg container mx-auto">
 		<div class="grid gap-4">
 			<!-- Первая строка: 2 столбца, второй в 2 раза шире первого -->
