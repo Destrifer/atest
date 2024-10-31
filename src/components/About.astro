@@ -19,7 +19,7 @@ import Button from "./Button.astro";
 				<li>Аренда авто от эконом до V.I.P. класса</li>
 				<li>Аренда автомобилей без водителя, так и с водителем</li>
 			</ul>
-			<div class="">
+			<div class="flex gap-4">
 				<Button title="Условия аренды" url="/rent-terms" styleClass="wt" />
 				<Button title="Наш автопарк" url="/park" styleClass="wt" />
 			</div>
@@ -40,10 +40,11 @@ import Button from "./Button.astro";
 		content: "✔"; /* Галочка */
 		position: absolute;
 		left: -5px;
-		color: green; /* Цвет галочки */
+		color: white; /* Цвет галочки */
 		font-size: 1.2em; /* Размер галочки */
 	}
 	:global(.wt) {
-		border: 3px solid green !important;
+		background: white !important;
+		color: #1e2933 !important;
 	}
 </style>
