@@ -1,16 +1,13 @@
 ---
 const { car } = Astro.props;
-import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import Button from "./Button.astro";
 ---
 
 <div class="car-card text-center" data-id={car.data.class_id}>
-	<Image
+	<img
 		src={car.data.images[0].image}
 		alt={car.data.model}
-		width="200"
-		height="150"
 		decoding="async"
 		loading="lazy"
 	/>
