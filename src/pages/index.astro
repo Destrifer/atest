@@ -1,21 +1,20 @@
 ---
-import { getCollection } from "astro:content";
-
-const apiFoods = await getCollection("apiFood");
-console.log("Data from getCollection:", apiFoods);
+import Layout from "../layouts/Layout.astro";
+import Slider from "@components/Slider.astro";
+import MainCars from "@components/MainCars.astro";
+import About from "@components/About.astro";
+const showTitle = false;
+const title = "Главная1";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body class="container py-4">
-		<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 items-start">
-			<pre>{JSON.stringify(apiFoods, null, 2)}</pre>
-		</div>
-	</body>
-</html>
+<Layout title={title} showTitle={showTitle}>
+	<Slider />
+	<MainCars />
+	<About />
+</Layout>
+
+<style>
+	body {
+		font-size: 1em;
+	}
+</style>

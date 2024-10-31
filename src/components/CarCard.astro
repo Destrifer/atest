@@ -1,0 +1,112 @@
+---
+const { car } = Astro.props;
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import Button from "./Button.astro";
+---
+
+<div class="car-card text-center" data-id={car.data.class_id}>
+	<Image
+		src={car.data.images[0].image}
+		alt={car.data.model}
+		width="200"
+		height="150"
+		decoding="async"
+		loading="lazy"
+	/>
+	<div class="flex flex-col gap-2 text-xl pb-2">
+		<p class="font-bold text-2xl">{car.data.model}</p>
+		<p>
+			Депозит: <strong>{car.data.deposit} ₽</strong>
+		</p>
+		<p>
+			Период аренды: <strong>{car.data.rent_period_days} дней</strong>
+		</p>
+	</div>
+	<Button
+		title={`От ${car.data.rate_per_day} ₽`}
+		url={`/vehicles/${car.data.id}`}
+		styleClass="order-button self-center text-2xl"
+	/>
+
+	<div
+		class="grid grid-cols-5 gap-2 items-center justify-center p-2 border-t-2 border-black mt-4"
+	>
+		<p class="flex items-center justify-center">
+			<Icon name="mdi:car" class="mr-1" />{car.data.year}
+		</p>
+		<p class="flex items-center justify-center">
+			<Icon name="mdi:engine" class="mr-1" />{car.data.engine_capacity}
+		</p>
+		<p class="flex items-center justify-center">
+			<Icon name="mdi:car-manual-transmission" class="mr-1" />{
+				car.data.transmission
+			}
+		</p>
+		<p class="flex items-center justify-center">
+			<Icon name="mdi:car-seat" class="mr-1" />{car.data.seats}
+		</p>
+		<p class="flex items-center justify-center">
+			<Icon name="mdi:color" class="mr-1" />
+			<span class="color-indicator" title={car.data.color}></span>
+		</p>
+	</div>
+</div>
+
+<style>
+	.car-card {
+		border: 1px solid #ddd;
+		border-radius: 8px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	.car-card img {
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+		border-radius: 4px;
+	}
+	.color-indicator {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		border: 1px solid #333;
+		display: inline-block;
+		margin-left: 4px;
+	}
+
+	/* Стили для различных цветов автомобилей */
+	.color-indicator[title="Белый"] {
+		background-color: white;
+		border-color: #ddd;
+	}
+	.color-indicator[title="Черный"] {
+		background-color: black;
+	}
+	.color-indicator[title="Серебристый"] {
+		background-color: silver;
+	}
+	.color-indicator[title="ТемноКрасный"] {
+		background-color: #8b0000;
+	}
+	.color-indicator[title="Серый"] {
+		background-color: gray;
+	}
+	.color-indicator[title="Желтый"] {
+		background-color: yellow;
+	}
+	.color-indicator[title="Синий"] {
+		background-color: blue;
+	}
+	.color-indicator[title="Бронзовый"] {
+		background-color: #cd7f32;
+	}
+	.color-indicator[title="ТемноСерый"] {
+		background-color: #2f4f4f;
+	}
+	.color-indicator:not([title]) {
+		background-color: white;
+		border-color: #ddd;
+	}
+</style>

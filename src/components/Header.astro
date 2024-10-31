@@ -1,0 +1,147 @@
+---
+import { Picture } from "astro:assets";
+import logo from "@img/logo.png";
+---
+
+<header class="bg-white shadow-lg z-10">
+	<div class="flex items-center justify-between py-4 px-8 container mx-auto">
+		<!-- Logo -->
+		<div>
+			<a href="/" rel="noopener noreferrer">
+				<Picture src={logo} formats={["avif", "webp"]} alt="" />
+			</a>
+		</div>
+
+		<!-- Burger Menu -->
+		<div class="sm:hidden relative">
+			<input type="checkbox" id="burgerToggle" class="hidden" />
+			<label for="burgerToggle" class="cursor-pointer">
+				<svg
+					class="w-8 h-8"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M4 6h16M4 12h16m-7 6h7"></path>
+				</svg>
+			</label>
+
+			<!-- Mobile Menu -->
+			<nav id="mobileMenu" class="absolute right-0 mt-2 hidden z-50 bg-white">
+				<a href="/" class="block px-4 py-2">Главная</a>
+				<a href="/rent-terms" class="block px-4 py-2">Условия аренды</a>
+
+				<!-- Dropdown (Always expanded) -->
+				<div>
+					<a href="/park" class="block px-4 py-2">Парк авто</a>
+					<div class="pl-4">
+						<a href="#" class="block px-2 py-2">Комфорт класс</a>
+						<a href="#" class="block px-2 py-2">Бизнес</a>
+						<a href="#" class="block px-2 py-2">Промо</a>
+						<a href="#" class="block px-2 py-2">Кроссоверы</a>
+						<a href="#" class="block px-2 py-2">Люкс</a>
+						<a href="#" class="block px-2 py-2">Внедорожник</a>
+						<a href="#" class="block px-2 py-2">Минивены</a>
+					</div>
+				</div>
+
+				<a href="/contact" class="block px-4 py-2">Контакты</a>
+			</nav>
+		</div>
+
+		<!-- Main Menu (for larger screens) -->
+		<nav class="hidden sm:flex items-center space-x-6 uppercase">
+			<a href="/">Главная</a>
+			<a href="/rent-terms">Условия аренды</a>
+
+			<!-- Dropdown -->
+			<div class="relative group">
+				<a href="/park" class="block px-4 py-2 font-bold">Парк авто</a>
+				<div
+					class="absolute hidden bg-white shadow-lg rounded-md group-hover:block z-50"
+				>
+					<a href="/park?class=1" class="block px-2 py-2">Комфорт класс</a>
+					<a href="/park?class=2" class="block px-2 py-2">Бизнес</a>
+					<a href="/park?class=3" class="block px-2 py-2">Промо</a>
+					<a href="/park?class=4" class="block px-2 py-2">Кроссоверы</a>
+					<a href="/park?class=5" class="block px-2 py-2">Люкс</a>
+					<a href="/park?class=6" class="block px-2 py-2">Внедорожник</a>
+					<a href="/park?class=7" class="block px-2 py-2">Минивены</a>
+				</div>
+			</div>
+			<a href="/contact">Контакты</a>
+		</nav>
+	</div>
+</header>
+
+<style>
+	/* Открытие бургер-меню при активации чекбокса */
+	#burgerToggle:checked ~ nav {
+		display: block;
+	}
+	header {
+		position: sticky;
+		top: 0;
+	}
+	header > div {
+		transition: padding 0.3s ease;
+	}
+	.scrolled {
+		padding: 5px;
+	}
+	/* Основной стиль меню */
+	nav a,
+	nav button {
+		display: inline-block;
+		padding: 0.5rem 1rem;
+		text-decoration: none;
+		color: black;
+		position: relative;
+		border-top: 2px solid transparent;
+		transition: all 0.3s ease;
+	}
+
+	/* Эффект при наведении */
+	nav a:hover,
+	nav button:hover {
+		color: red;
+		transform: scale(1.05);
+	}
+
+	/* Полоса сверху */
+	nav > a:hover::before,
+	nav button:hover::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		background-color: red;
+		animation: slideIn 0.3s forwards;
+	}
+
+	/* Анимация появления полосы */
+	@keyframes slideIn {
+		0% {
+			width: 0;
+		}
+		100% {
+			width: 100%;
+		}
+	}
+</style>
+<script>
+	window.addEventListener("scroll", () => {
+		if (window.scrollY > 92) {
+			document.querySelector("header > div").classList.add("scrolled");
+		} else {
+			document.querySelector("header > div").classList.remove("scrolled");
+		}
+	});
+</script>

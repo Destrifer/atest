@@ -1,0 +1,126 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+const title = "Наши контакты";
+---
+
+<Layout title={title}>
+	<div
+		class="flex justify-center items-center py-8 gap-4 container mx-auto flex-wrap"
+	>
+		<div class="">
+			<ul class="self-start space-y-2">
+				<li class="flex">
+					<div
+						class="w-12 h-12 flex items-center justify-center rounded-full bg-[#3c5b9b]"
+					>
+						<Icon
+							name="mdi:id-card-outline"
+							class="inline-block text-white"
+							size="28"
+						/>
+					</div>
+					<div class="ml-4">
+						<p class="font-bold text-lg">Наименование юридического лица:</p> ООО
+						«КАНСАЙ-ГРУПП» ИНН: 9102225144
+					</div>
+				</li>
+				<li class="flex">
+					<div
+						class="w-12 h-12 flex items-center justify-center rounded-full bg-[#3c5b9b]"
+					>
+						<Icon name="mdi:house" class="inline-block text-white" size="28" />
+					</div>
+					<div class="ml-4">
+						<p class="font-bold text-lg">Адрес:</p> 297536, Республика Крым, Симферопольский
+						р-н, с.Укромное, Ул.Молодежная, 64-б
+					</div>
+				</li>
+				<li class="flex">
+					<div
+						class="w-12 h-12 flex items-center justify-center rounded-full bg-[#3c5b9b]"
+					>
+						<Icon name="mdi:phone" class="inline-block text-white" size="24" />
+					</div><div class="ml-4">
+						<p class="font-bold text-lg">Телефон:</p> +7 978 955 60 60 +7 978 913
+						44 13
+					</div>
+				</li>
+				<li class="flex">
+					<div
+						class="w-12 h-12 flex items-center justify-center rounded-full bg-[#3c5b9b]"
+					>
+						<Icon
+							name="mdi:whatsapp"
+							class="inline-block text-white"
+							size="24"
+						/>
+					</div><div class="ml-4">
+						<p class="font-bold text-lg">Whatsapp:</p> +7 978 955 60 60
+					</div>
+				</li>
+				<li class="flex">
+					<div
+						class="w-12 h-12 flex items-center justify-center rounded-full bg-[#3c5b9b]"
+					>
+						<Icon name="mdi:email" class="inline-block text-white" size="24" />
+					</div>
+					<div class="ml-4">
+						<p class="font-bold text-lg">Email:</p> info@car-on-time.ru
+					</div>
+				</li>
+				<li class="flex">
+					<div
+						class="w-12 h-12 flex items-center justify-center rounded-full bg-[#3c5b9b]"
+					>
+						<Icon name="mdi:clock" class="inline-block text-white" size="24" />
+					</div>
+					<div class="ml-4">
+						<p class="font-bold text-lg">Режим работы:</p> Мы работаем ежедневно
+						с 08:00 до 20:00
+					</div>
+				</li>
+			</ul>
+			<p class="pt-4">
+				<strong class="block pb-4">Заявки принимаются круглосуточно.</strong> Мы
+				можем подать Вам автомобиль в любом уголке крымского полуострова!
+			</p>
+		</div>
+
+		<div>
+			<p class="pb-4 text-3xl text-center font-bold">Обратная связь</p>
+			<form
+				class="self-start w-50 flex flex-col sm:flex-row sm:flex-wrap sm:gap-4 gap-4"
+			>
+				<input
+					type="text"
+					name="name"
+					required
+					placeholder="Имя:"
+					class="w-full sm:w-[48%] p-2 border text-black"
+				/>
+				<input
+					type="email"
+					name="email"
+					required
+					placeholder="Email:"
+					class="w-full sm:w-[48%] p-2 border text-black"
+				/>
+				<textarea
+					name="message"
+					required
+					placeholder="Сообщение:"
+					class="w-full p-2 border text-black h-48"></textarea>
+				<button type="submit" class="w-full bg-red-600 p-2 text-white w-auto"
+					>Отправить</button
+				>
+			</form>
+		</div>
+	</div>
+	<script
+		type="text/javascript"
+		charset="utf-8"
+		async
+		src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Aece16c0aa3a0b27ead911b2e73651c3e58476e33c32541d6a37fec73beb343bb&width=100%25&height=350&lang=ru_RU&scroll=true"
+	></script>
+</Layout>
