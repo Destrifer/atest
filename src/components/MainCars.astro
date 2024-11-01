@@ -10,7 +10,7 @@ const cars = await getCollection("apiCars");
 		АРЕНДА АВТО В КРЫМУ
 	</h1>
 
-	<div class="tab-buttons flex justify-center gap-4 my-4">
+	<div class="tab-buttons flex justify-center gap-4 my-4 flex-wrap">
 		<button class="tab-button active" data-tab="1">Комфорт</button>
 		<button class="tab-button" data-tab="2">Бизнес</button>
 		<button class="tab-button" data-tab="4">Кроссоверы</button>
@@ -75,7 +75,7 @@ const cars = await getCollection("apiCars");
 <style>
 	.cars-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(320px, 480px));
 		grid-gap: 16px;
 	}
 	.tab-button {
