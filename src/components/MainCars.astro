@@ -17,7 +17,7 @@ const cars = await getCollection("apiCars");
 		<button class="tab-button" data-tab="6">Внедорожники</button>
 	</div>
 
-	<div class="cars-grid">
+	<div class="cars-grid mx-auto">
 		{cars.map((car) => <CarCard car={car} />)}
 	</div>
 </div>
@@ -77,6 +77,7 @@ const cars = await getCollection("apiCars");
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(320px, 480px));
 		grid-gap: 16px;
+		justify-content: center;
 	}
 	.tab-button {
 		padding: 10px 20px;
