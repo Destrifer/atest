@@ -19,22 +19,50 @@ import Form from "./Form.astro";
 		<p class="text-2xl text-white drop-shadow-md">
 			Стойка в терминале аэропорт Симферополь
 		</p>
-		<Modal
-			id="myAwsomeModal"
-			ariaLabel="Share on social"
-			btnCloseAriaLabel="Close Modal"
-		>
-			<div slot="open-modal-button" class="order-button">Авто без водителя</div>
+		<div class="flex gap-4">
+			<Modal id="owod" ariaLabel="owod" btnCloseAriaLabel="Close Modal">
+				<div slot="open-modal-button" class="order-button">
+					Авто без водителя
+				</div>
 
-			<h2 slot="modal-title">Заказ авто без водителя</h2>
+				<h2 slot="modal-title" class="mx-auto mb-4 text-3xl font-bold">
+					Заказ авто без водителя
+				</h2>
 
-			<div slot="modal-main">
-				<h4>Укажите свои данные для заказа автомобиля</h4>
-				<Form />
-			</div>
+				<div slot="modal-main">
+					<p class="text-xl font-semibold mb-4">
+						Укажите свои данные для заказа автомобиля
+					</p>
+					<Form />
+				</div>
 
-			<div slot="modal-footer">Modal Footer</div>
-		</Modal>
+				<div slot="modal-footer" class="text-xl my-4">
+					После отправки формы с Вами свяжется наш менеджер, и уточнит детали
+					заказа
+				</div>
+			</Modal>
+			<Modal id="owd" ariaLabel="owd" btnCloseAriaLabel="Close Modal">
+				<div slot="open-modal-button" class="order-button">
+					Авто с водителем
+				</div>
+
+				<h2 slot="modal-title" class="mx-auto mb-4 text-3xl font-bold">
+					Заказ авто с водителем
+				</h2>
+
+				<div slot="modal-main">
+					<p class="text-xl font-semibold mb-4">
+						Укажите свои данные для заказа автомобиля
+					</p>
+					<Form />
+				</div>
+
+				<div slot="modal-footer" class="text-xl my-4">
+					После отправки формы с Вами свяжется наш менеджер, и уточнит детали
+					заказа
+				</div>
+			</Modal>
+		</div>
 	</div>
 
 	<!-- Правая часть с изображением, ограниченным по высоте -->

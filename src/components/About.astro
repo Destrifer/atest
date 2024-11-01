@@ -5,7 +5,9 @@ import Button from "./Button.astro";
 
 <div class="bg-[#1e2933] py-8 mt-8">
 	<div class="flex flex-wrap container mx-auto gap-4">
-		<div class="md:w-[48%] mx-auto text-[#ccc] flex gap-4 flex-col">
+		<div
+			class="flex-1 min-w-1/2 mx-auto text-[#ccc] flex gap-4 flex-col min-w-80"
+		>
 			<p class="text-2xl font-semibold">Аренда авто в крыму CAR-ON-TIME</p>
 			<h2 class="text-4xl font-black uppercase text-white">О компании</h2>
 			<p class="text-xl">
@@ -24,7 +26,7 @@ import Button from "./Button.astro";
 				<Button title="Наш автопарк" url="/park" styleClass="wt" />
 			</div>
 		</div>
-		<div class="md:w-[48%] mx-auto">
+		<div class="flex-1 min-w-1/2 min-w-80">
 			<YouTube id="0I6_05Rcpdo" title="Автопрокат Car-On-Time" />
 		</div>
 	</div>
