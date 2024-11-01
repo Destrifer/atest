@@ -34,9 +34,10 @@ const { title, description, h1, showTitle = true } = Astro.props;
 	</body>
 </html>
 
-<style>
+<style is:global>
 	body {
 		color: #1f3852;
+		font-size: 18px;
 	}
 	.shadow-up {
 		box-shadow: 0px -4px 10px -2px rgb(0 0 0 / 0.1) inset;
