@@ -1,0 +1,69 @@
+---
+let vehicles = []; // Пустой массив для данных
+---
+
+<h1>Available Cars</h1>
+
+<ul id="vehicles">
+	<li>Loading...</li>
+</ul>
+
+<script>
+	// Функция для получения данных из API на основе параметров URL
+	async function fetchVehicles() {
+		const params = new URLSearchParams(window.location.search);
+		const fromId = params.get("from-id") || "10";
+		const fromDate = params.get("from-date") || getDateWithOffset(3);
+
+		const toDate = getDateWithOffset(10); // Вычисляем дату "to-date"
+		const response = await fetch(
+			`https://new.mycarrental.ru/api/v2/search_cars?from-id=${fromId}&to-id=10&to-date=${toDate}&from-date=${fromDate}&from-time=12%3A00&to-time=12%3A00&promocode=null&per_page=100`,
+		);
+		const data = await response.json();
+		return data.vehicles || [];
+	}
+
+	// Функция для вычисления даты с добавлением дней
+	function getDateWithOffset(daysOffset) {
+		const date = new Date();
+		date.setDate(date.getDate() + daysOffset);
+		const day = String(date.getDate()).padStart(2, "0");
+		const month = String(date.getMonth() + 1).padStart(2, "0");
+		const year = date.getFullYear();
+		return `${day}.${month}.${year}`;
+	}
+
+	// Вызов функции после загрузки страницы
+	document.addEventListener("DOMContentLoaded", async () => {
+		const vehicles = await fetchVehicles();
+		const vehiclesList = document.getElementById("vehicles");
+
+		vehiclesList.innerHTML = ""; // Очищаем список
+
+		if (vehicles.length > 0) {
+			vehicles.forEach((vehicle) => {
+				console.log(vehicle); // Выводим объект в консоль для проверки его структуры
+
+				const model = vehicle.model || "Unknown model";
+				const year = vehicle.year ? `Year: ${vehicle.year}` : "Year: N/A";
+				const color = vehicle.color ? `Color: ${vehicle.color}` : "Color: N/A";
+				const seats = vehicle.seats ? `Seats: ${vehicle.seats}` : "Seats: N/A";
+				const rate = vehicle.rate_per_day
+					? `Rate per day: ${vehicle.rate_per_day} RUB`
+					: "Rate per day: N/A";
+
+				const listItem = document.createElement("li");
+				listItem.innerHTML = `
+				<a href="/vehicles/${vehicle.id}">${model}</a>
+          <p>${year}</p>
+          <p>${color}</p>
+          <p>${seats}</p>
+          <p>${rate}</p>
+        `;
+				vehiclesList.appendChild(listItem);
+			});
+		} else {
+			vehiclesList.innerHTML = "<li>No vehicles found.</li>";
+		}
+	});
+</script>

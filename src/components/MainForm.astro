@@ -1,0 +1,16 @@
+<!-- Form.astro -->
+<form method="get" action="/search">
+	<label for="from-id">From ID:</label>
+	<input type="text" id="from-id" name="from-id" required />
+
+	<label for="from-date">From Date (DD.MM.YYYY):</label>
+	<input
+		type="text"
+		id="from-date"
+		name="from-date"
+		placeholder="DD.MM.YYYY"
+		required
+	/>
+
+	<button type="submit">Search</button>
+</form>
