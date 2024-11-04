@@ -14,55 +14,80 @@ const description = `Взять напрокат автомобиль ${vehicle.
 ---
 
 <Layout title={title} description={description} h1={h1}>
-	<div class="container mx-auto out-block">
-		<div class="main-block">
-			<div class="embla">
-				<div class="embla__viewport">
-					<div class="embla__container">
-						<div class="embla__slide">
-							<img src={vehicle.data.images[0].image} alt="Main car image" />
+	<div class="container mx-auto out-block flex-wrap xl:flex-nowrap gap-4 mt-4">
+		<div class="">
+			<div class="main-block flex-wrap 2xl:flex-nowrap">
+				<div class="embla lg:min-w-[800px] min-w-[320px]">
+					<div class="embla__viewport">
+						<div class="embla__container">
+							<div class="embla__slide">
+								<img src={vehicle.data.images[0].image} alt="Main car image" />
+							</div>
+							{
+								vehicle.data.real_photos && vehicle.data.real_photos.length > 0
+									? vehicle.data.real_photos.map((photo) => (
+											<div class="embla__slide">
+												<img
+													src={photo.replace("_w200", "")}
+													alt="Real photo"
+												/>
+											</div>
+										))
+									: ""
+							}
 						</div>
-						{
-							vehicle.data.real_photos && vehicle.data.real_photos.length > 0
-								? vehicle.data.real_photos.map((photo) => (
-										<div class="embla__slide">
-											<img src={photo.replace("_w200", "")} alt="Real photo" />
-										</div>
-									))
-								: ""
-						}
 					</div>
-				</div>
-				<button
-					class="embla__button embla__button--prev"
-					aria-label="Previous slide"
-				>
-					<span class="embla__icon"></span>
-				</button>
-				<button
-					class="embla__button embla__button--next"
-					aria-label="Next slide"
-				>
-					<span class="embla__icon"></span>
-				</button>
-			</div>
-			<ul class="inline-flex flex-col">
-				<li>Класс:</li>
-				<li>Год выпуска: <strong>{vehicle.data.year}</strong></li>
-				<li>Двигатель: <strong>{vehicle.data.engine_capacity}</strong></li>
-				<li>Коробка передач: <strong>{vehicle.data.transmission}</strong></li>
-				<li>Топливо: <strong>{vehicle.data.engine_type}</strong></li>
-				<li>Мест: <strong>{vehicle.data.seats}</strong></li>
-				<li>Цвет: <strong>{vehicle.data.color}</strong></li>
-				<li>
-					Минимально дней аренды: <strong
-						>{vehicle.data.rent_period_days}</strong
+					<button
+						class="embla__button embla__button--prev"
+						aria-label="Previous slide"
 					>
-				</li>
-				<li>Общая стоимость: <strong>{vehicle.data.rate_subtotal}</strong></li>
-				<li>Стоимость в день: <strong>{vehicle.data.rate_per_day}</strong></li>
-				<li>Депозит: <strong>{vehicle.data.deposit}</strong></li>
-			</ul>
+						<span class="embla__icon"></span>
+					</button>
+					<button
+						class="embla__button embla__button--next"
+						aria-label="Next slide"
+					>
+						<span class="embla__icon"></span>
+					</button>
+				</div>
+				<ul class="car-card inline-flex flex-col flex-wrap md:flex-nowrap">
+					<li>Класс:</li>
+					<li>Год выпуска: <strong>{vehicle.data.year}</strong></li>
+					<li>Двигатель: <strong>{vehicle.data.engine_capacity}</strong></li>
+					<li>Коробка передач: <strong>{vehicle.data.transmission}</strong></li>
+					<li>Топливо: <strong>{vehicle.data.engine_type}</strong></li>
+					<li>Мест: <strong>{vehicle.data.seats}</strong></li>
+					<li>Цвет: <strong>{vehicle.data.color}</strong></li>
+					<li>
+						Минимально дней аренды: <strong
+							>{vehicle.data.rent_period_days}</strong
+						>
+					</li>
+					<li>
+						Общая стоимость: <strong>{vehicle.data.rate_subtotal}</strong>
+					</li>
+					<li>
+						Стоимость в день: <strong>{vehicle.data.rate_per_day}</strong>
+					</li>
+					<li>Депозит: <strong>{vehicle.data.deposit}</strong></li>
+				</ul>
+			</div>
+			<div class="">
+				<h2 class="py-4 font-black text-xl uppercase">Онлайн-заявка:</h2>
+				<Form />
+			</div>
+			<h2 class="py-4 font-black text-xl uppercase">Дополнительные услуги:</h2>
+			<div class="md:columns-2 add">
+				<p>Навигатор <strong>150 рублей в сутки</strong></p>
+				<p>Детское кресло <strong>200 рублей в сутки</strong></p>
+				<p>Набор автомобилиста <strong>Бесплатно</strong></p>
+				<p>Отмена залога и франшизы <strong>уточняйте у менеджера</strong></p>
+				<p>Wi-Fi Интернет <strong>300 рублей в сутки</strong></p>
+				<p>Мойка кузова автомобиля <strong>500 рублей</strong></p>
+				<p>Мойка салона автомобиля <strong>500 рублей</strong></p>
+				<p>Химчистка салона автомобиля <strong>3000 рублей</strong></p>
+				<p>Полировка кузова автомобиля <strong>5000 рублей</strong></p>
+			</div>
 		</div>
 		<div class="sidebar-column">
 			<div class="inner">
@@ -72,7 +97,7 @@ const description = `Взять напрокат автомобиль ${vehicle.
 					уточняйте у менеджеров отдела бронирования!!!
 				</p>
 				<h2 class="py-4 font-black text-xl uppercase">Тарифы</h2>
-				<table class="">
+				<table class="tarifs">
 					<tr>
 						<td>Аренда</td>
 						<td>Стоимость</td>
@@ -91,6 +116,7 @@ const description = `Взять напрокат автомобиль ${vehicle.
 					</tr>
 				</table>
 				<h2 class="py-4 font-black text-xl uppercase">Доступные цвета</h2>
+				<p>{vehicle.data.color}</p>
 			</div>
 			<div class="inner">
 				<h2 class="py-4 font-black text-xl uppercase">Условия аренды</h2>
@@ -147,6 +173,57 @@ const description = `Взять напрокат автомобиль ${vehicle.
 		}
 		.main-block {
 			display: flex;
+		}
+		.gbox {
+			background: #44bb6e;
+			outline: 1px solid white;
+			outline-offset: -20px;
+			padding: 40px;
+			color: white;
+		}
+		.tarifs {
+			border-left: 1px solid #ddd;
+			border-bottom: 1px solid #ddd;
+			width: 100%;
+		}
+		.tarifs td {
+			border-top: 1px solid #ddd;
+			padding: 10px;
+			border-right: 1px solid #ddd;
+		}
+		.car-card {
+			padding: 10px;
+			margin: 10px;
+			min-width: 320px;
+			width: 100%;
+		}
+		.car-card li {
+			display: flex;
+			gap: 10px;
+			justify-content: space-between;
+			margin-left: 25px;
+			margin-top: 10px;
+			position: relative;
+			border-bottom: 1px solid #ddd;
+		}
+		.car-card li::before {
+			content: "✔";
+			position: absolute;
+			left: -25px;
+			top: 5px;
+			width: 18px;
+			height: 18px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #ccffcc;
+			border-radius: 50%;
+			font-size: 0.5em;
+		}
+		.add p {
+			display: flex;
+			gap: 10px;
+			justify-content: space-between;
 		}
 		.embla {
 			position: relative;
