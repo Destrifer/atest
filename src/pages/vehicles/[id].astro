@@ -14,10 +14,10 @@ const description = `Взять напрокат автомобиль ${vehicle.
 ---
 
 <Layout title={title} description={description} h1={h1}>
-	<div class="container mx-auto out-block flex-wrap xl:flex-nowrap gap-4 mt-4">
+	<div class="container md:mx-auto out-block flex-wrap xl:flex-nowrap gap-4">
 		<div class="">
-			<div class="main-block flex-wrap 2xl:flex-nowrap">
-				<div class="embla lg:min-w-[800px] min-w-[320px]">
+			<div class="main-block flex-wrap 2xl:flex-nowrap m-2">
+				<div class="embla lg:min-w-[800px]">
 					<div class="embla__viewport">
 						<div class="embla__container">
 							<div class="embla__slide">
@@ -76,21 +76,23 @@ const description = `Взять напрокат автомобиль ${vehicle.
 				<h2 class="py-4 font-black text-xl uppercase">Онлайн-заявка:</h2>
 				<Form />
 			</div>
-			<h2 class="py-4 font-black text-xl uppercase">Дополнительные услуги:</h2>
-			<div class="md:columns-2 add">
-				<p>Навигатор <strong>150 рублей в сутки</strong></p>
-				<p>Детское кресло <strong>200 рублей в сутки</strong></p>
+			<h2 class="py-4 font-black text-xl uppercase m-2">
+				Дополнительные услуги:
+			</h2>
+			<div class="md:columns-2 add m-2">
+				<p>Навигатор <strong>150 ₽ в сутки</strong></p>
+				<p>Детское кресло <strong>200 ₽ в сутки</strong></p>
 				<p>Набор автомобилиста <strong>Бесплатно</strong></p>
 				<p>Отмена залога и франшизы <strong>уточняйте у менеджера</strong></p>
-				<p>Wi-Fi Интернет <strong>300 рублей в сутки</strong></p>
-				<p>Мойка кузова автомобиля <strong>500 рублей</strong></p>
-				<p>Мойка салона автомобиля <strong>500 рублей</strong></p>
-				<p>Химчистка салона автомобиля <strong>3000 рублей</strong></p>
-				<p>Полировка кузова автомобиля <strong>5000 рублей</strong></p>
+				<p>Wi-Fi Интернет <strong>300 ₽ в сутки</strong></p>
+				<p>Мойка кузова автомобиля <strong>500 ₽</strong></p>
+				<p>Мойка салона автомобиля <strong>500 ₽</strong></p>
+				<p>Химчистка салона автомобиля <strong>3000 ₽</strong></p>
+				<p>Полировка кузова автомобиля <strong>5000 ₽</strong></p>
 			</div>
 		</div>
 		<div class="sidebar-column">
-			<div class="inner">
+			<div class="inner m-2">
 				<h2 class="py-4 font-black text-xl uppercase">Аренда автомобиля</h2>
 				<p class="gbox">
 					Внимание! Стоимость аренды данного автомобиля на интересующие Вас даты
@@ -118,12 +120,12 @@ const description = `Взять напрокат автомобиль ${vehicle.
 				<h2 class="py-4 font-black text-xl uppercase">Доступные цвета</h2>
 				<p>{vehicle.data.color}</p>
 			</div>
-			<div class="inner">
+			<div class="inner m-2">
 				<h2 class="py-4 font-black text-xl uppercase">Условия аренды</h2>
 				<div class="">
 					<strong>Возраст:</strong> с 22 лет<br />
 					<strong>Стаж:</strong> не менее 3 лет<br />
-					<strong>Залог:</strong> от 5 000 рублей
+					<strong>Залог:</strong> от 5 000 ₽
 				</div>
 				<h2 class="py-4 font-black text-xl uppercase">Необходимые документы</h2>
 				<strong>Для граждан РФ:</strong> Паспорт РФ, действующая прописка, Водительское
@@ -152,11 +154,11 @@ const description = `Взять напрокат автомобиль ${vehicle.
 					</li>
 				</ul>
 			</div>
-			<div class="inner">
+			<div class="inner m-2">
 				<h2 class="py-4 font-black text-xl uppercase">Условия аренды</h2>
 				<strong>Возраст:</strong> с 22 лет<br />
 				<strong>Стаж:</strong> не менее 3 лет<br />
-				<strong>Залог:</strong> от 5 000 рублей
+				<strong>Залог:</strong> от 5 000 ₽
 				<h2 class="py-4 font-black text-xl uppercase">Поддержка</h2>
 				<Icon name="mdi:phone" class="inline-block mr-2" size="24" />
 				<strong>+7 978 955 60 60</strong><br />
@@ -192,9 +194,6 @@ const description = `Взять напрокат автомобиль ${vehicle.
 			border-right: 1px solid #ddd;
 		}
 		.car-card {
-			padding: 10px;
-			margin: 10px;
-			min-width: 320px;
 			width: 100%;
 		}
 		.car-card li {
