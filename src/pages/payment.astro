@@ -8,7 +8,7 @@ const description =
 ---
 
 <Layout title={title} description={description} h1={h1}>
-	<div class="container mx-auto gap-4 text-xl">
+	<div class="container mx-auto gap-4 text-xl p-4 md:p-0">
 		<ul class="">
 			<li>
 				<h2 class="py-2 font-bold text-3xl">Банковские реквизиты</h2>
@@ -29,35 +29,35 @@ const description =
 		</ul>
 		<ul class="mt-2">
 			<li>
-				<img src="../../public/vtb.svg" alt="ВТБ" />
+				<img src="/vtb.svg" alt="ВТБ" />
 				<p>Номер карты ВТБ уточняйте у менеджера</p>
 			</li>
 			<li>
-				<img src="../../public/yd.svg" alt="Яд" />
+				<img src="/yd.svg" alt="Яд" />
 				<p>Оплата со счета в Яндекс.Деньгах</p>
 			</li>
 			<li>
-				<img src="../../public/alfa.svg" alt="Альфа" />
+				<img src="/alfa.svg" alt="Альфа" />
 				<p>Номер счета в системе Альфа-Клик уточняйте у менеджера</p>
 			</li>
 			<li>
-				<img src="../../public/wb.svg" alt="ВМ" />
+				<img src="/wb.svg" alt="ВМ" />
 				<p>Оплата cо счета WebMoney</p>
 			</li>
 			<li>
-				<img src="../../public/sber.svg" alt="Сбер" />
+				<img src="/sber.svg" alt="Сбер" />
 				<p>Номер карты Сбербанк уточняйте у менеджера</p>
 			</li>
 			<li>
-				<img src="../../public/wb.svg" alt="ВМ" />
+				<img src="/wb.svg" alt="ВМ" />
 				<p>Мы принимаем WebMoney</p>
 			</li>
 			<li>
-				<img src="../../public/sber.svg" alt="Сбер" />
+				<img src="/sber.svg" alt="Сбер" />
 				<p>Номер телефона для СМС-перевода уточняйте у менеджера</p>
 			</li>
 			<li>
-				<img src="../../public/qiwi.svg" alt="Киви" />
+				<img src="/qiwi.svg" alt="Киви" />
 				<p>Оплата cо счета QIWI</p>
 			</li>
 		</ul>
@@ -80,6 +80,7 @@ const description =
 		padding: 20px;
 		display: flex;
 		justify-content: space-between;
+		flex-wrap: wrap;
 		gap: 10px;
 		align-items: center;
 	}
