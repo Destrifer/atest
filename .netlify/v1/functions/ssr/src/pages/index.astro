@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Slider from "@components/Slider.astro";
+import MainCars from "@components/MainCars.astro";
+import About from "@components/About.astro";
+import Feedback from "@components/Feedback.astro";
+import MainForm from "@components/MainForm.astro";
+const showTitle = false;
+---
+
+<Layout showTitle={showTitle}>
+	<Slider />
+	<MainCars />
+	<About />
+	<MainForm />
+	<Feedback />
+</Layout>
+
+<style is:global>
+	body {
+		font-size: 1em;
+	}
+	body * {
+		box-sizing: border-box;
+	}
+</style>
