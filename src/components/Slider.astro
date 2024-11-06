@@ -1,80 +1,71 @@
 ---
 import { Picture } from "astro:assets";
+import { BackgroundPicture } from "astro-imagetools/components";
 import Button from "./Button.astro";
-import bmw from "@img/bmw.png";
-import camaro from "@img/camaro.png";
+import orig from "@img/orig.png";
 import Modal from "@xexiu/astro-modal";
 import Form from "./Form.astro";
+import src from "../img/orig.png";
 ---
 
-<div class="flex flex-col md:flex-row w-full h-full first">
-	<!-- Левая часть с текстом по центру -->
-	<div
-		class="w-full md:w-1/2 flex items-center justify-center text-center flex-col gap-y-4"
-	>
-		<p class="text-4xl font-black text-white drop-shadow-md">
-			АРЕНДА АВТО В КРЫМУ
-		</p>
-		<p class="text-5xl font-black text-red-600">+7 (978) 955-60-60</p>
-		<p class="text-2xl text-white drop-shadow-md">
-			Стойка в терминале аэропорт Симферополь
-		</p>
-		<div class="flex gap-4">
-			<Modal id="owod" ariaLabel="owod" btnCloseAriaLabel="Close Modal">
-				<div slot="open-modal-button" class="order-button">
-					Авто без водителя
-				</div>
+<!-- Левая часть с текстом по центру -->
+<BackgroundPicture src="/src/img/orig.png">
+	<div class="flex justify-center bg">
+		<div class="flex flex-col gap-6 py-20 lg:transform lg:-translate-x-1/2">
+			<p class="text-4xl font-black text-white drop-shadow-md">
+				АРЕНДА АВТО В КРЫМУ
+			</p>
+			<p class="text-5xl font-black text-red-600">+7 (978) 955-60-60</p>
+			<p class="text-2xl text-white drop-shadow-md">
+				Стойка в терминале аэропорт Симферополь
+			</p>
+			<div class="flex gap-4 mx-auto">
+				<Modal id="owod" ariaLabel="owod" btnCloseAriaLabel="Close Modal">
+					<div slot="open-modal-button" class="order-button">
+						Авто без водителя
+					</div>
 
-				<h2 slot="modal-title" class="mx-auto mb-4 text-3xl font-bold">
-					Заказ авто без водителя
-				</h2>
+					<h2 slot="modal-title" class="mx-auto mb-4 text-3xl font-bold">
+						Заказ авто без водителя
+					</h2>
 
-				<div slot="modal-main">
-					<p class="text-xl font-semibold mb-4">
-						Укажите свои данные для заказа автомобиля
-					</p>
-					<Form />
-				</div>
+					<div slot="modal-main">
+						<p class="text-xl font-semibold mb-4">
+							Укажите свои данные для заказа автомобиля
+						</p>
+						<Form />
+					</div>
 
-				<div slot="modal-footer" class="text-xl my-4">
-					После отправки формы с Вами свяжется наш менеджер, и уточнит детали
-					заказа
-				</div>
-			</Modal>
-			<Modal id="owd" ariaLabel="owd" btnCloseAriaLabel="Close Modal">
-				<div slot="open-modal-button" class="order-button">
-					Авто с водителем
-				</div>
+					<div slot="modal-footer" class="text-xl my-4">
+						После отправки формы с Вами свяжется наш менеджер и уточнит детали
+						заказа
+					</div>
+				</Modal>
+				<Modal id="owd" ariaLabel="owd" btnCloseAriaLabel="Close Modal">
+					<div slot="open-modal-button" class="order-button">
+						Авто с водителем
+					</div>
 
-				<h2 slot="modal-title" class="mx-auto mb-4 text-3xl font-bold">
-					Заказ авто с водителем
-				</h2>
+					<h2 slot="modal-title" class="mx-auto mb-4 text-3xl font-bold">
+						Заказ авто с водителем
+					</h2>
 
-				<div slot="modal-main">
-					<p class="text-xl font-semibold mb-4">
-						Укажите свои данные для заказа автомобиля
-					</p>
-					<Form />
-				</div>
+					<div slot="modal-main">
+						<p class="text-xl font-semibold mb-4">
+							Укажите свои данные для заказа автомобиля
+						</p>
+						<Form />
+					</div>
 
-				<div slot="modal-footer" class="text-xl my-4">
-					После отправки формы с Вами свяжется наш менеджер, и уточнит детали
-					заказа
-				</div>
-			</Modal>
+					<div slot="modal-footer" class="text-xl my-4">
+						После отправки формы с Вами свяжется наш менеджер и уточнит детали
+						заказа
+					</div>
+				</Modal>
+			</div>
 		</div>
 	</div>
-
-	<!-- Правая часть с изображением, ограниченным по высоте -->
-	<div class="w-full md:w-1/2 flex items-center justify-center z-10">
-		<Picture
-			src={bmw}
-			formats={["avif", "webp"]}
-			alt="Car on time"
-			class="max-h-[400px] object-contain"
-		/>
-	</div>
-</div>
+</BackgroundPicture>
 <style>
 	/*:global(dialog) {
 		top: 0%;
@@ -96,7 +87,15 @@ import Form from "./Form.astro";
 		color: white;
 		cursor: pointer;
 	}
-	.first {
+	.bg::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: black;
+		opacity: 30%;
+	}
+
+	/*.first {
 		background: linear-gradient(
 			180deg,
 			#a2dff7 0%,
@@ -106,7 +105,7 @@ import Form from "./Form.astro";
 		);
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
-		height: 100%; /* Заменено на 100% для родительского элемента */
+		height: 100%;
 		margin: 0;
 		overflow: hidden;
 		position: relative;
@@ -142,5 +141,5 @@ import Form from "./Form.astro";
 		left: -50%;
 		transform: rotate(-20deg);
 		z-index: 1;
-	}
+	}*/
 </style>
