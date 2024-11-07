@@ -13,6 +13,7 @@
 		"@astrojs/check": "^0.9.4",
 		"@astrojs/netlify": "^5.5.4",
 		"@astrojs/tailwind": "^5.1.2",
+		"@fontsource/roboto": "^5.1.0",
 		"@iconify-json/mdi": "^1.2.1",
 		"@xexiu/astro-modal": "^0.5.9",
 		"astro": "^4.16.8",
