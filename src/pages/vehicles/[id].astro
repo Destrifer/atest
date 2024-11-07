@@ -263,6 +263,13 @@ const description = `Взять напрокат автомобиль ${vehicle.
 		.embla__button--next {
 			right: 1rem;
 		}
+		.embla__icon::before {
+			content: "⏴"; /* Стрелка для кнопки "назад" */
+		}
+
+		.embla__button--next .embla__icon::before {
+			content: "⏵"; /* Стрелка для кнопки "вперед" */
+		}
 	</style>
 
 	<script>
