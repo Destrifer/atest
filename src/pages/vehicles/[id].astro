@@ -50,32 +50,25 @@ const description = `Взять напрокат автомобиль ${vehicle.
 						<span class="embla__icon"></span>
 					</button>
 				</div>
-				<ul class="car-card inline-flex flex-col flex-wrap md:flex-nowrap">
-					<li>Класс:</li>
-					<li>Год выпуска: <strong>{vehicle.data.year}</strong></li>
-					<li>Двигатель: <strong>{vehicle.data.engine_capacity}</strong></li>
-					<li>Коробка передач: <strong>{vehicle.data.transmission}</strong></li>
-					<li>Топливо: <strong>{vehicle.data.engine_type}</strong></li>
-					<li>Мест: <strong>{vehicle.data.seats}</strong></li>
-					<li>Цвет: <strong>{vehicle.data.color}</strong></li>
-					<li>
-						Минимально дней аренды: <strong
-							>{vehicle.data.rent_period_days}</strong
-						>
-					</li>
-					<li>
-						Общая стоимость: <strong>{vehicle.data.rate_subtotal}</strong>
-					</li>
-					<li>
-						Стоимость в день: <strong>{vehicle.data.rate_per_day}</strong>
-					</li>
-					<li>Депозит: <strong>{vehicle.data.deposit}</strong></li>
-				</ul>
 			</div>
-			<div class="">
-				<h2 class="py-4 font-black text-xl uppercase">Онлайн-заявка:</h2>
-				<Form />
-			</div>
+			<ul class="car-card grid grid-cols-1 md:grid-cols-2 gap-4">
+				<li>Класс:</li>
+				<li>Год выпуска: <strong>{vehicle.data.year}</strong></li>
+				<li>Двигатель: <strong>{vehicle.data.engine_capacity}</strong></li>
+				<li>Коробка передач: <strong>{vehicle.data.transmission}</strong></li>
+				<li>Топливо: <strong>{vehicle.data.engine_type}</strong></li>
+				<li>Мест: <strong>{vehicle.data.seats}</strong></li>
+				<li>Цвет: <strong>{vehicle.data.color}</strong></li>
+				<li>
+					Минимально дней аренды: <strong
+						>{vehicle.data.rent_period_days}</strong
+					>
+				</li>
+				<li>Общая стоимость: <strong>{vehicle.data.rate_subtotal}</strong></li>
+				<li>Стоимость в день: <strong>{vehicle.data.rate_per_day}</strong></li>
+				<li>Депозит: <strong>{vehicle.data.deposit}</strong></li>
+			</ul>
+
 			<h2 class="py-4 font-black text-xl uppercase m-2">
 				Дополнительные услуги:
 			</h2>
@@ -89,6 +82,10 @@ const description = `Взять напрокат автомобиль ${vehicle.
 				<p>Мойка салона автомобиля <strong>500 ₽</strong></p>
 				<p>Химчистка салона автомобиля <strong>3000 ₽</strong></p>
 				<p>Полировка кузова автомобиля <strong>5000 ₽</strong></p>
+			</div>
+			<div class="">
+				<h2 class="py-4 font-black text-xl uppercase">Онлайн-заявка:</h2>
+				<Form />
 			</div>
 		</div>
 		<div class="sidebar-column">
@@ -137,18 +134,21 @@ const description = `Взять напрокат автомобиль ${vehicle.
 				</h2>
 				<ul>
 					<li>
-						<Icon name="mdi:download" class="inline-block mr-2" /><a href=""
+						<Icon name="mdi:download" class="inline-block mr-2" /><a
+							href="/doc/dogovor_arend_avtomobilya_bez_voditelya_dlya_fizlits.docx"
 							>Договор аренды автомобиля без водителя для физлиц (docx) /
 							35.20kb
 						</a>
 					</li>
 					<li>
-						<Icon name="mdi:download" class="inline-block mr-2" /><a href=""
+						<Icon name="mdi:download" class="inline-block mr-2" /><a
+							href="/doc/dogovor_arendy_avtomobilya_bez_voditelya_dlya_yurlits.docx"
 							>Договор аренды автомобиля без водителя для юрлиц (docx) / 43.20kb
 						</a>
 					</li>
 					<li>
-						<Icon name="mdi:download" class="inline-block mr-2" /><a href=""
+						<Icon name="mdi:download" class="inline-block mr-2" /><a
+							href="/doc/dop_soglashenie.docx"
 							>Дополнительное соглашение к договору (docx) / 23.90kb
 						</a>
 					</li>
