@@ -1,81 +1,83 @@
 ---
 import { Icon } from "astro-icon/components";
 import Form from "./Form.astro";
+import Background from "./Background.astro";
+import orig from "@img/feedback.jpg";
 ---
 
-<div
-	class="relative bg-cover bg-bottom before:absolute before:inset-0 before:bg-black before:bg-opacity-70 before:content-['']"
-	style="background-image: url('/feedback.jpg');"
->
-	<div
-		class="container mx-auto text-white relative z-10 flex gap-8 flex-col flex-wrap p-1"
-	>
-		<div class="text-center">
-			Задайте вопрос онлайн
-			<p class="text-4xl font-black">Обратная связь</p>
-		</div>
-
-		<div class="flex gap-4 justify-center flex-wrap">
-			<div class="md:w-[48%]">
-				<Form />
+<Background path={orig} opacity="20">
+	<div class="">
+		<div
+			class="container mx-auto text-white relative z-10 flex gap-8 flex-col flex-wrap p-1"
+		>
+			<div class="text-center">
+				Задайте вопрос онлайн
+				<p class="text-4xl font-black">Обратная связь</p>
 			</div>
-			<div class="text-white md:w-[48%] w-full">
-				Мы работаем для Вас ежедневно c 08:00 до 20:00.<br />
-				Прием и выдача автомобилей в нерабочее время - 1500 руб.<br />
-				Стойка аренды авто в терминале аэропорт Симферополь
-				<ul class="font-bold space-y-2 mt-4">
-					<li>
-						<Icon
-							name="mdi:id-card-outline"
-							class="inline-block mr-2 text-white"
-							size="28"
-						/>Наименование юридического лица: ООО «КАНСАЙ-ГРУПП» ИНН: 9102225144
-					</li>
-					<li>
-						<Icon
-							name="mdi:house"
-							class="inline-block mr-2 text-white"
-							size="28"
-						/>Адрес: 297536, Республика Крым, Симферопольский р-н, с.Укромное,
-						Ул.Молодежная, 64-б
-					</li>
-					<li>
-						<Icon
-							name="mdi:whatsapp"
-							class="inline-block mr-2 text-white"
-							size="24"
-						/>WhatsApp: +7 (978) 955-60-60
-					</li>
-					<li>
-						<Icon
-							name="mdi:phone"
-							class="inline-block mr-2 text-white"
-							size="24"
-						/>Телефон: +7 (978) 955-60-60
-					</li>
-					<li>
-						<Icon
-							name="mdi:email"
-							class="inline-block mr-2 text-white"
-							size="24"
-						/>E-mail: info@car-on-time.ru
-					</li>
-					<li>
-						<Icon
-							name="mdi:clock"
-							class="inline-block mr-2 text-white"
-							size="24"
-						/>Время работы: 08:00-20:00 - ежедневно
-					</li>
-					<li>
-						<Icon
-							name="mdi:map-marker"
-							class="inline-block mr-2 text-white"
-							size="24"
-						/>Показать на карте
-					</li>
-				</ul>
+
+			<div class="flex gap-4 justify-center flex-wrap">
+				<div class="md:w-[48%]">
+					<Form />
+				</div>
+				<div class="text-white md:w-[48%] w-full">
+					Мы работаем для Вас ежедневно c 08:00 до 20:00.<br />
+					Прием и выдача автомобилей в нерабочее время - 1500 руб.<br />
+					Стойка аренды авто в терминале аэропорт Симферополь
+					<ul class="font-bold space-y-2 mt-4">
+						<li>
+							<Icon
+								name="mdi:id-card-outline"
+								class="inline-block mr-2 text-white"
+								size="28"
+							/>Наименование юридического лица: ООО «КАНСАЙ-ГРУПП» ИНН:
+							9102225144
+						</li>
+						<li>
+							<Icon
+								name="mdi:house"
+								class="inline-block mr-2 text-white"
+								size="28"
+							/>Адрес: 297536, Республика Крым, Симферопольский р-н, с.Укромное,
+							Ул.Молодежная, 64-б
+						</li>
+						<li>
+							<Icon
+								name="mdi:whatsapp"
+								class="inline-block mr-2 text-white"
+								size="24"
+							/>WhatsApp: +7 (978) 955-60-60
+						</li>
+						<li>
+							<Icon
+								name="mdi:phone"
+								class="inline-block mr-2 text-white"
+								size="24"
+							/>Телефон: +7 (978) 955-60-60
+						</li>
+						<li>
+							<Icon
+								name="mdi:email"
+								class="inline-block mr-2 text-white"
+								size="24"
+							/>E-mail: info@car-on-time.ru
+						</li>
+						<li>
+							<Icon
+								name="mdi:clock"
+								class="inline-block mr-2 text-white"
+								size="24"
+							/>Время работы: 08:00-20:00 - ежедневно
+						</li>
+						<li>
+							<Icon
+								name="mdi:map-marker"
+								class="inline-block mr-2 text-white"
+								size="24"
+							/>Показать на карте
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</Background>

@@ -2,15 +2,16 @@
 import { Picture } from "astro:assets";
 
 // Получаем путь из свойств компонента
-const { path } = Astro.props;
+const { path, position = "center center", opacity = 50 } = Astro.props;
 ---
 
-<section class="wrap relative">
+<section class="relative">
 	<Picture
 		src={path}
 		formats={["avif", "webp"]}
 		alt="Car on time"
 		class="background"
+		style={`object-position: ${position}; filter: brightness(${opacity}%);`}
 	/>
 	<slot />
 </section>
@@ -23,14 +24,5 @@ const { path } = Astro.props;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		object-position: bottom center;
-	}
-	.wrap::before {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background: black;
-		opacity: 30%;
-		z-index: 10;
 	}
 </style>
