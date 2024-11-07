@@ -2,7 +2,9 @@
 const date = new Date().getFullYear();
 ---
 
-<footer class="flex flex-col items-center gap-y-4 w-full mt-4 bg-[#1e2833]">
+<footer
+	class="flex flex-col items-center gap-y-4 w-full bg-[#1e2833] text-white py-4"
+>
 	<nav>
 		<a href="/">Главная</a>
 		<a href="/park">Наш парк</a>
@@ -10,9 +12,8 @@ const date = new Date().getFullYear();
 		<a href="/rent-terms">Условия аренды</a>
 		<a href="/contact">Контакты</a>
 	</nav>
-	<a
-		href="https://vk.com/avtoprokatkrym"
-		class="uil--vk bg-[#1e2933] text-white p-4 rounded">VK.COM</a
+	<a href="https://vk.com/avtoprokatkrym" class="uil--vk bg-red-600 p-4 rounded"
+		>VK.COM</a
 	>
 	<p class="w-full sm:w-1/2 text-center">
 		© 2010-{date} | Аренда авто в Крыму — Крым автопрокат Car on Time Симферополь
@@ -33,7 +34,6 @@ const date = new Date().getFullYear();
 		display: inline-block;
 		padding: 0.5rem 1rem;
 		text-decoration: none;
-		color: black;
 		font-weight: 500;
 		position: relative;
 		border-top: 2px solid transparent;
