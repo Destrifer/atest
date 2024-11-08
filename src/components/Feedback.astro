@@ -5,81 +5,78 @@ import Background from "./Background.astro";
 import orig from "@img/feedback.jpg";
 ---
 
-<Background path={orig} opacity="20">
-	<div class="">
-		<div
-			class="container mx-auto text-white relative z-10 flex gap-8 flex-col flex-wrap py-4"
-		>
-			<div class="text-2xl font-semibold">
-				Задайте вопрос онлайн
-				<p class="text-4xl font-black uppercase text-white mt-4">
-					Обратная связь
-				</p>
-			</div>
+<div
+	class="bg-[#1e2933] py-8 border-t border-t-dashed border-t-white text-white"
+>
+	<div class="mx-auto container flex flex-col gap-4 p-2">
+		<div class="text-2xl font-semibold">
+			Задайте вопрос онлайн
+			<p class="text-4xl font-black uppercase text-white mt-4">
+				Обратная связь
+			</p>
+		</div>
 
-			<div class="flex gap-4 justify-center flex-wrap">
-				<div class="text-white md:w-[48%] w-full text-xl">
-					Мы работаем для Вас ежедневно c 08:00 до 20:00.<br />
-					Прием и выдача автомобилей в нерабочее время - 1500 руб.<br />
-					Стойка аренды авто в терминале аэропорт Симферополь
-					<ul class="font-bold space-y-2 mt-4 text-xl">
-						<li>
-							<Icon
-								name="mdi:id-card-outline"
-								class="inline-block mr-2 text-white"
-								size="28"
-							/>Наименование юридического лица: ООО «КАНСАЙ-ГРУПП» ИНН:
-							9102225144
-						</li>
-						<li>
-							<Icon
-								name="mdi:house"
-								class="inline-block mr-2 text-white"
-								size="28"
-							/>Адрес: 297536, Республика Крым, Симферопольский р-н, с.Укромное,
-							Ул.Молодежная, 64-б
-						</li>
-						<li>
-							<Icon
-								name="mdi:whatsapp"
-								class="inline-block mr-2 text-white"
-								size="24"
-							/>WhatsApp: +7 (978) 955-60-60
-						</li>
-						<li>
-							<Icon
-								name="mdi:phone"
-								class="inline-block mr-2 text-white"
-								size="24"
-							/>Телефон: +7 (978) 955-60-60
-						</li>
-						<li>
-							<Icon
-								name="mdi:email"
-								class="inline-block mr-2 text-white"
-								size="24"
-							/>E-mail: info@car-on-time.ru
-						</li>
-						<li>
-							<Icon
-								name="mdi:clock"
-								class="inline-block mr-2 text-white"
-								size="24"
-							/>Время работы: 08:00-20:00 - ежедневно
-						</li>
-						<li>
-							<Icon
-								name="mdi:map-marker"
-								class="inline-block mr-2 text-white"
-								size="24"
-							/>Показать на карте
-						</li>
-					</ul>
-				</div>
-				<div class="md:w-[48%]">
-					<Form />
-				</div>
+		<div class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
+			<div class="text-white text-xl">
+				Мы работаем для Вас ежедневно c 08:00 до 20:00.<br />
+				Прием и выдача автомобилей в нерабочее время - 1500 руб.<br />
+				Стойка аренды авто в терминале аэропорт Симферополь
+				<ul class="font-bold space-y-2 mt-4 text-xl">
+					<li>
+						<Icon
+							name="mdi:id-card-outline"
+							class="inline-block mr-2 text-white"
+							size="28"
+						/>Наименование юридического лица: ООО «КАНСАЙ-ГРУПП» ИНН: 9102225144
+					</li>
+					<li>
+						<Icon
+							name="mdi:house"
+							class="inline-block mr-2 text-white"
+							size="28"
+						/>Адрес: 297536, Республика Крым, Симферопольский р-н, с.Укромное,
+						Ул.Молодежная, 64-б
+					</li>
+					<li>
+						<Icon
+							name="mdi:whatsapp"
+							class="inline-block mr-2 text-white"
+							size="24"
+						/>WhatsApp: +7 (978) 955-60-60
+					</li>
+					<li>
+						<Icon
+							name="mdi:phone"
+							class="inline-block mr-2 text-white"
+							size="24"
+						/>Телефон: +7 (978) 955-60-60
+					</li>
+					<li>
+						<Icon
+							name="mdi:email"
+							class="inline-block mr-2 text-white"
+							size="24"
+						/>E-mail: info@car-on-time.ru
+					</li>
+					<li>
+						<Icon
+							name="mdi:clock"
+							class="inline-block mr-2 text-white"
+							size="24"
+						/>Время работы: 08:00-20:00 - ежедневно
+					</li>
+					<li>
+						<Icon
+							name="mdi:map-marker"
+							class="inline-block mr-2 text-white"
+							size="24"
+						/>Показать на карте
+					</li>
+				</ul>
+			</div>
+			<div>
+				<Form />
 			</div>
 		</div>
 	</div>
-</Background>
+</div>
