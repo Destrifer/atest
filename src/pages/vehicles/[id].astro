@@ -14,10 +14,12 @@ const description = `Взять напрокат автомобиль ${vehicle.
 ---
 
 <Layout title={title} description={description} h1={h1}>
-	<div class="container md:mx-auto out-block flex-wrap xl:flex-nowrap gap-4">
-		<div class="">
-			<div class="main-block flex-wrap 2xl:flex-nowrap m-2 gap-2">
-				<div class="embla lg:min-w-[800px]">
+	<div
+		class="grid gap-4 p-2 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] mx-auto container"
+	>
+		<div class="main-block">
+			<div class="flex flex-wrap 2xl:flex-nowrap m-2 gap-2">
+				<div class="embla">
 					<div class="embla__viewport">
 						<div class="embla__container">
 							<div class="embla__slide">
@@ -170,12 +172,6 @@ const description = `Взять напрокат автомобиль ${vehicle.
 		</div>
 	</div>
 	<style>
-		.container {
-			display: flex;
-		}
-		.main-block {
-			display: flex;
-		}
 		.gbox {
 			background: #44bb6e;
 			outline: 1px solid white;
