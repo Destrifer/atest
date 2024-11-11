@@ -19,7 +19,6 @@ const description =
 			<button class="tab-button" data-id="2">Бизнес</button>
 			<!-- Убрана кнопка с data-id="3" -->
 			<button class="tab-button" data-id="4">Кроссоверы</button>
-			<button class="tab-button" data-id="5">Люкс</button>
 			<button class="tab-button" data-id="6">Внедорожники</button>
 			<button class="tab-button" data-id="7">Минивены</button>
 		</div>
@@ -30,7 +29,7 @@ const description =
 				cars.length > 0 ? (
 					// Фильтруем автомобили, исключая те, у которых class_id равен 3
 					cars
-						.filter((car) => car.data.class_id !== 3)
+						.filter((car) => car.data.class_id !== 3 && car.data.class_id !== 5)
 						.map((car) => <CarCard car={car} data-id={car.data.class_id} />)
 				) : (
 					<p class="mx-4">Машин больше нет</p>
