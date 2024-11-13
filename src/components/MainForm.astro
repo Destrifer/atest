@@ -42,7 +42,7 @@
 </div>
 <script>
 	function setDefaultDate() {
-		const input = document.getElementById("from-date");
+		const input = document.getElementById("from-date") as HTMLInputElement;
 		const currentDate = new Date();
 		currentDate.setDate(currentDate.getDate() + 3); // Добавляем 3 дня
 
