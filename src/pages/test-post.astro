@@ -5,53 +5,63 @@ import Layout from "../layouts/Layout.astro";
 <Layout>
 	<h1>Отправка POST-запроса</h1>
 	<button id="sendRequest">Отправить запрос</button>
-	<p id="response"></p>
+	<pre id="response"></pre>
 
 	<script>
-		document
-			.getElementById("sendRequest")
-			.addEventListener("click", async () => {
-				const data = {
-					accept: true, // Согласен с условиями
-					data: {
-						phone: "+79991234567",
-						name: "Иван",
-						surname: "Иванов",
-						email: "ivan@example.com",
-						pick_up_datetime: "28.11.2024 12:00",
-						drop_off_datetime: "30.11.2024 12:00",
-						currency: { id: 1 },
+		document.getElementById("sendRequest").addEventListener("click", () => {
+			const data = new FormData();
+
+			// Обязательные поля
+			data.append("accept", "1");
+			data.append("data[phone]", "+79099999009");
+			data.append("data[name]", "Тест");
+			data.append("data[surname]", "Тест");
+			data.append("data[email]", "test@test.com");
+			data.append("data[pick_up_datetime]", "14.12.2024 12:00");
+			data.append("data[drop_off_datetime]", "19.12.2024 10:00");
+			data.append(
+				"data[vendor_vehicle_id]",
+				"b1cc4440-7ef7-11ee-b143-2cfda1c62158",
+			);
+			data.append("data[cost_per_day]", "1000");
+			data.append("data[pick_up_location_id]", "84");
+			data.append("data[drop_off_location_id]", "84");
+			data.append("data[currency][id]", "1");
+			data.append("data[cost_total]", "2000");
+			data.append(
+				"full_data",
+				JSON.stringify({
+					info: {
+						pick_up_location_id: 84,
+						drop_off_location_id: 84,
 					},
-					full_data: JSON.stringify({
-						info: { someInfo: "value" },
-						extras: { extraOption: "value" },
-						vehicle: { carId: 123 },
-						equipment: { gps: true },
-					}),
-				};
+					extras: {},
+					vehicle: {},
+					equipment: {},
+				}),
+			);
 
-				try {
-					const response = await fetch(
-						"https://new.mycarrental.ru/order/store",
-						{
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(data),
-						},
-					);
+			const xhr = new XMLHttpRequest();
+			xhr.open("POST", "https://mycarrental.ru/api/v1/order/store", true);
 
-					const result = await response.json();
-					document.getElementById("response").innerText = JSON.stringify(
-						result,
-						null,
-						2,
-					);
-				} catch (error) {
+			// Устанавливаем заголовок авторизации
+			xhr.setRequestHeader("Authorization", "Bearer ILup4Hh8B7degUc01nHx6js5");
+
+			xhr.onload = function () {
+				if (xhr.status >= 200 && xhr.status < 300) {
 					document.getElementById("response").innerText =
-						`Ошибка: ${error.message}`;
+						`Response: ${xhr.responseText}`;
+				} else {
+					document.getElementById("response").innerText =
+						`Error: ${xhr.status} ${xhr.statusText}`;
 				}
-			});
+			};
+
+			xhr.onerror = function () {
+				document.getElementById("response").innerText = "Request failed.";
+			};
+
+			xhr.send(data);
+		});
 	</script>
 </Layout>
