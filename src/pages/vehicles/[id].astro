@@ -14,9 +14,10 @@ const description = `Взять напрокат автомобиль ${vehicle.
 ---
 
 <Layout title={title} description={description} h1={h1}>
-	<div
+	<!-- <div
 		class="grid gap-4 p-2 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] mx-auto container"
-	>
+	> -->
+	<div class="grid gap-4 p-2 mx-auto container">
 		<div class="main-block">
 			<div class="flex flex-wrap 2xl:flex-nowrap m-2 gap-2">
 				<div class="embla">
@@ -52,6 +53,142 @@ const description = `Взять напрокат автомобиль ${vehicle.
 						<span class="embla__icon"></span>
 					</button>
 				</div>
+
+				<form id="dataForm">
+					<div>
+						<label for="accept">Согласие с условиями:</label>
+						<input
+							type="checkbox"
+							id="accept"
+							name="accept"
+							value="1"
+							required
+						/>
+					</div>
+					<div>
+						<label for="phone">Телефон:</label>
+						<input
+							type="text"
+							id="phone"
+							name="data[phone]"
+							value="+79099999009"
+							required
+						/>
+					</div>
+					<div>
+						<label for="name">Имя:</label>
+						<input
+							type="text"
+							id="name"
+							name="data[name]"
+							value="Тест"
+							required
+						/>
+					</div>
+					<div>
+						<label for="surname">Фамилия:</label>
+						<input
+							type="text"
+							id="surname"
+							name="data[surname]"
+							value="Тест"
+							required
+						/>
+					</div>
+					<div>
+						<label for="email">Email:</label>
+						<input
+							type="email"
+							id="email"
+							name="data[email]"
+							value="test@test.com"
+							required
+						/>
+					</div>
+					<div>
+						<label for="pick_up_datetime">Дата и время получения:</label>
+						<input
+							type="text"
+							id="pick_up_datetime"
+							name="data[pick_up_datetime]"
+							placeholder="дд.мм.гггг чч:мм"
+							value="14.12.2024 12:00"
+							required
+						/>
+					</div>
+					<div>
+						<label for="drop_off_datetime">Дата и время возврата:</label>
+						<input
+							type="text"
+							id="drop_off_datetime"
+							name="data[drop_off_datetime]"
+							placeholder="дд.мм.гггг чч:мм"
+							value="19.12.2024 10:00"
+							required
+						/>
+					</div>
+					<div>
+						<label for="vendor_vehicle_id">ID автомобиля:</label>
+						<input
+							type="text"
+							id="vendor_vehicle_id"
+							name="data[vendor_vehicle_id]"
+							value="b1cc4440-7ef7-11ee-b143-2cfda1c62158"
+							required
+						/>
+					</div>
+					<div>
+						<label for="cost_per_day">Стоимость за день:</label>
+						<input
+							type="number"
+							id="cost_per_day"
+							name="data[cost_per_day]"
+							value="1000"
+							required
+						/>
+					</div>
+					<div>
+						<label for="pick_up_location_id">ID места получения:</label>
+						<input
+							type="number"
+							id="pick_up_location_id"
+							name="data[pick_up_location_id]"
+							value="84"
+							required
+						/>
+					</div>
+					<div>
+						<label for="drop_off_location_id">ID места возврата:</label>
+						<input
+							type="number"
+							id="drop_off_location_id"
+							name="data[drop_off_location_id]"
+							value="84"
+							required
+						/>
+					</div>
+					<div>
+						<label for="currency_id">ID валюты:</label>
+						<input
+							type="number"
+							id="currency_id"
+							name="data[currency][id]"
+							value="1"
+							required
+						/>
+					</div>
+					<div>
+						<label for="cost_total">Общая стоимость:</label>
+						<input
+							type="number"
+							id="cost_total"
+							name="data[cost_total]"
+							value="2000"
+							required
+						/>
+					</div>
+					<button type="button" id="sendRequest">Отправить запрос</button>
+				</form>
 			</div>
 			<ul class="car-card grid grid-cols-1 md:grid-cols-2 gap-4">
 				<li>Класс:</li>
@@ -287,6 +424,48 @@ const description = `Взять напрокат автомобиль ${vehicle.
 			document
 				.querySelector(".embla__button--next")!
 				.addEventListener("click", () => embla.scrollNext());
+		});
+	</script>
+	<script>
+		document.getElementById("sendRequest").addEventListener("click", () => {
+			const form = document.getElementById("dataForm");
+			const formData = new FormData(form);
+
+			// Добавляем поле full_data
+			formData.append(
+				"full_data",
+				JSON.stringify({
+					info: {
+						pick_up_location_id: formData.get("data[pick_up_location_id]"),
+						drop_off_location_id: formData.get("data[drop_off_location_id]"),
+					},
+					extras: {},
+					vehicle: {},
+					equipment: {},
+				}),
+			);
+
+			const xhr = new XMLHttpRequest();
+			xhr.open("POST", "https://mycarrental.ru/api/v1/order/store", true);
+
+			// Устанавливаем заголовок авторизации
+			xhr.setRequestHeader("Authorization", "Bearer ILup4Hh8B7degUc01nHx6js5");
+
+			xhr.onload = function () {
+				if (xhr.status >= 200 && xhr.status < 300) {
+					document.getElementById("response").innerText =
+						`Response: ${xhr.responseText}`;
+				} else {
+					document.getElementById("response").innerText =
+						`Error: ${xhr.status} ${xhr.statusText}`;
+				}
+			};
+
+			xhr.onerror = function () {
+				document.getElementById("response").innerText = "Request failed.";
+			};
+
+			xhr.send(formData);
 		});
 	</script>
 </Layout>
