@@ -1,0 +1,13 @@
+# Общие настройки
+User-agent: *
+Disallow: /private/
+Disallow: /api/
+Disallow: /drafts/
+Disallow: /admin/
+
+# Закрытие системных файлов Astro
+Disallow: /node_modules/
+Disallow: /_astro/
+
+# Карта сайта (если есть)
+Sitemap: https://car-on-time.ru/sitemap.xml
