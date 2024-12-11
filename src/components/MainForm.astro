@@ -19,7 +19,13 @@
 				<select name="from-id" id="from-id" required class="p-2 text-black">
 					<option value="10">Симферополь Аэропорт</option>
 					<option value="10">Симферополь Вокзал</option>
-					<option value="10">Симферополь Центр</option>
+				</select>
+			</div>
+			<div class="flex flex-col gap-2">
+				<label for="to-id">Место возврата:</label>
+				<select name="to-id" id="to-id" required class="p-2 text-black">
+					<option value="10">Симферополь Аэропорт</option>
+					<option value="10">Симферополь Вокзал</option>
 				</select>
 			</div>
 			<div class="flex flex-col gap-2">
@@ -32,29 +38,86 @@
 					class="p-2 text-black"
 				/>
 			</div>
+			<div class="flex flex-col gap-2">
+				<label for="to-date">Дата возврата:</label>
+				<input
+					type="date"
+					id="to-date"
+					name="to-date"
+					required
+					class="p-2 text-black"
+				/>
+			</div>
+			<div class="flex flex-col gap-2">
+				<label for="promocode">Промокод:</label>
+				<input
+					type="text"
+					id="promocode"
+					name="promocode"
+					placeholder="Введите промокод (если есть)"
+					class="p-2 text-black"
+				/>
+			</div>
 			<button
 				type="submit"
 				class="bg-red-600 px-4 py-2 cursor-pointer uppercase self-end"
-				>НАЙТИ АВТОМОБИЛЬ</button
 			>
+				НАЙТИ АВТОМОБИЛЬ
+			</button>
 		</form>
 	</div>
 </div>
 <script>
 	function setDefaultDate() {
-		const input = document.getElementById("from-date") as HTMLInputElement;
+		// Получаем элементы from-date и to-date
+		const fromDateInput = document.getElementById(
+			"from-date",
+		) as HTMLInputElement;
+		const toDateInput = document.getElementById("to-date") as HTMLInputElement;
+
+		// Устанавливаем текущую дату + 3 дня для даты получения
 		const currentDate = new Date();
-		currentDate.setDate(currentDate.getDate() + 3); // Добавляем 3 дня
+		currentDate.setDate(currentDate.getDate() + 3);
 
 		const year = currentDate.getFullYear();
 		const month = String(currentDate.getMonth() + 1).padStart(2, "0");
 		const day = String(currentDate.getDate()).padStart(2, "0");
 
-		const formattedDate = `${year}-${month}-${day}`;
-		input.value = formattedDate; // Устанавливаем значение по умолчанию
-		input.min = formattedDate; // Устанавливаем минимальную дату
+		const formattedFromDate = `${year}-${month}-${day}`;
+		fromDateInput.value = formattedFromDate;
+		fromDateInput.min = formattedFromDate;
+
+		// Устанавливаем минимальную дату для возврата: from-date + 1 день
+		const returnDate = new Date(currentDate);
+		returnDate.setDate(returnDate.getDate() + 1);
+
+		const formattedToDate = `${returnDate.getFullYear()}-${String(
+			returnDate.getMonth() + 1,
+		).padStart(2, "0")}-${String(returnDate.getDate()).padStart(2, "0")}`;
+
+		toDateInput.value = formattedToDate;
+		toDateInput.min = formattedToDate;
+
+		// Обновление минимальной даты возврата при изменении даты получения
+		fromDateInput.addEventListener("change", () => {
+			const selectedFromDate = new Date(fromDateInput.value);
+			selectedFromDate.setDate(selectedFromDate.getDate() + 1);
+
+			const updatedToDate = `${selectedFromDate.getFullYear()}-${String(
+				selectedFromDate.getMonth() + 1,
+			).padStart(
+				2,
+				"0",
+			)}-${String(selectedFromDate.getDate()).padStart(2, "0")}`;
+
+			toDateInput.min = updatedToDate;
+
+			// Обновляем значение to-date, если оно меньше минимального
+			if (new Date(toDateInput.value) < selectedFromDate) {
+				toDateInput.value = updatedToDate;
+			}
+		});
 	}
 
-	// Вызов функции при загрузке страницы
 	setDefaultDate();
 </script>
