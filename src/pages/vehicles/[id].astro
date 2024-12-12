@@ -55,144 +55,89 @@ const description = `Взять напрокат автомобиль ${vehicle.
 				</div>
 
 				<div>
-					<form id="dataForm">
-						<div>
-							<label for="accept">
-								<input
-									type="checkbox"
-									id="accept"
-									name="accept"
-									value="1"
-									required
-								/>
-								Согласие с условиями
-							</label>
-						</div>
-						<div>
-							<label for="phone">Телефон:</label>
+					<form id="apiForm">
+						<label>
+							Телефон:
+							<input type="text" name="phone" value="+79099999009" required />
+						</label>
+						<br />
+						<label>
+							Имя:
+							<input type="text" name="name" value="Тест" required />
+						</label>
+						<br />
+						<label>
+							Фамилия:
+							<input type="text" name="surname" value="Тест" required />
+						</label>
+						<br />
+						<label>
+							Email:
+							<input type="email" name="email" value="test@test.com" required />
+						</label>
+						<br />
+						<label>
+							Дата и время начала:
+							<input
+								type="datetime-local"
+								name="pick_up_datetime"
+								value="2024-12-14T12:00"
+								required
+							/>
+						</label>
+						<br />
+						<label>
+							Дата и время завершения:
+							<input
+								type="datetime-local"
+								name="drop_off_datetime"
+								value="2024-12-21T10:00"
+								required
+							/>
+						</label>
+						<br />
+						<label>
+							ID автомобиля:
 							<input
 								type="text"
-								id="phone"
-								name="data[phone]"
-								value="+79099999009"
+								name="vendor_vehicle_id"
+								value="ff3e736e-0f24-11e7-8f4d-ac9e17b8d7a7"
 								required
 							/>
-						</div>
-						<div>
-							<label for="name">Имя:</label>
-							<input
-								type="text"
-								id="name"
-								name="data[name]"
-								value="Тест"
-								required
-							/>
-						</div>
-						<div>
-							<label for="surname">Фамилия:</label>
-							<input
-								type="text"
-								id="surname"
-								name="data[surname]"
-								value="Тест"
-								required
-							/>
-						</div>
-						<div>
-							<label for="email">Email:</label>
-							<input
-								type="email"
-								id="email"
-								name="data[email]"
-								value="test@test.com"
-								required
-							/>
-						</div>
-						<div>
-							<label for="pick_up_datetime">Дата и время получения:</label>
-							<input
-								type="text"
-								id="pick_up_datetime"
-								name="data[pick_up_datetime]"
-								placeholder="дд.мм.гггг чч:мм"
-								value="14.12.2024 12:00"
-								required
-							/>
-						</div>
-						<div>
-							<label for="drop_off_datetime">Дата и время возврата:</label>
-							<input
-								type="text"
-								id="drop_off_datetime"
-								name="data[drop_off_datetime]"
-								placeholder="дд.мм.гггг чч:мм"
-								value="19.12.2024 10:00"
-								required
-							/>
-						</div>
-						<div>
-							<label for="vendor_vehicle_id">ID автомобиля:</label>
-							<input
-								type="text"
-								id="vendor_vehicle_id"
-								name="data[vendor_vehicle_id]"
-								value="b1cc4440-7ef7-11ee-b143-2cfda1c62158"
-								required
-							/>
-						</div>
-						<div>
-							<label for="cost_per_day">Стоимость за день:</label>
+						</label>
+						<br />
+						<label>
+							Стоимость за день:
+							<input type="number" name="cost_per_day" value="1000" required />
+						</label>
+						<br />
+						<label>
+							ID пункта выдачи:
 							<input
 								type="number"
-								id="cost_per_day"
-								name="data[cost_per_day]"
-								value="1000"
+								name="pick_up_location_id"
+								value="82"
 								required
 							/>
-						</div>
-						<div>
-							<label for="pick_up_location_id">ID места получения:</label>
+						</label>
+						<br />
+						<label>
+							ID пункта возврата:
 							<input
 								type="number"
-								id="pick_up_location_id"
-								name="data[pick_up_location_id]"
-								value="84"
+								name="drop_off_location_id"
+								value="82"
 								required
 							/>
-						</div>
-						<div>
-							<label for="drop_off_location_id">ID места возврата:</label>
-							<input
-								type="number"
-								id="drop_off_location_id"
-								name="data[drop_off_location_id]"
-								value="84"
-								required
-							/>
-						</div>
-						<div>
-							<label for="currency_id">ID валюты:</label>
-							<input
-								type="number"
-								id="currency_id"
-								name="data[currency][id]"
-								value="1"
-								required
-							/>
-						</div>
-						<div>
-							<label for="cost_total">Общая стоимость:</label>
-							<input
-								type="number"
-								id="cost_total"
-								name="data[cost_total]"
-								value="2000"
-								required
-							/>
-						</div>
-						<button type="button" id="sendRequest">Отправить запрос</button>
+						</label>
+						<br />
+						<label>
+							Итоговая стоимость:
+							<input type="number" name="cost_total" value="999" required />
+						</label>
+						<br />
+						<button type="button" id="submitButton">Отправить</button>
 					</form>
-					<pre id="response"></pre>
 				</div>
 			</div>
 			<ul class="car-card grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -433,28 +378,58 @@ const description = `Взять напрокат автомобиль ${vehicle.
 	</script>
 	<script>
 		document
-			.getElementById("sendRequest")
+			.getElementById("submitButton")
 			.addEventListener("click", async () => {
-				// Явно указываем, что dataForm — это HTMLFormElement
-				const form = document.getElementById("dataForm") as HTMLFormElement;
-				if (!form) {
-					console.error("Форма не найдена!");
-					return;
-				}
-
+				const form = document.getElementById("apiForm");
 				const formData = new FormData(form);
 
-				// Формируем объект данных для отправки через JSON
-				const data = Object.fromEntries(formData.entries());
-				data.full_data = JSON.stringify({
-					info: {
-						pick_up_location_id: formData.get("data[pick_up_location_id]"),
-						drop_off_location_id: formData.get("data[drop_off_location_id]"),
+				// Функция для преобразования даты и времени в формат DD.MM.YYYY HH:mm
+				const formatDateTime = (dateTime) => {
+					const [date, time] = dateTime.split("T");
+					const [year, month, day] = date.split("-");
+					return `${day}.${month}.${year} ${time}`;
+				};
+
+				const data = {
+					accept: "1",
+					data: {
+						phone: formData.get("phone"),
+						name: formData.get("name"),
+						surname: formData.get("surname"),
+						email: formData.get("email"),
+						pick_up_datetime: formatDateTime(formData.get("pick_up_datetime")),
+						drop_off_datetime: formatDateTime(
+							formData.get("drop_off_datetime"),
+						),
+						vendor_vehicle_id: formData.get("vendor_vehicle_id"),
+						cost_per_day: Number(formData.get("cost_per_day")),
+						pick_up_location_id: Number(formData.get("pick_up_location_id")),
+						drop_off_location_id: Number(formData.get("drop_off_location_id")),
+						currency: {
+							id: 1,
+							letter_code: "RUB",
+						},
+						cost_total: Number(formData.get("cost_total")),
 					},
-					extras: {},
-					vehicle: {},
-					equipment: {},
-				});
+					full_data: JSON.stringify({
+						info: {
+							pick_up_location_id: Number(formData.get("pick_up_location_id")),
+							drop_off_location_id: Number(
+								formData.get("drop_off_location_id"),
+							),
+						},
+						extras: {},
+						vehicle: {},
+						equipment: {},
+					}),
+				};
+
+				// Выводим преобразованные значения в консоль
+				console.log("Formatted pick_up_datetime:", data.data.pick_up_datetime);
+				console.log(
+					"Formatted drop_off_datetime:",
+					data.data.drop_off_datetime,
+				);
 
 				try {
 					const response = await fetch(
@@ -476,14 +451,11 @@ const description = `Взять напрокат автомобиль ${vehicle.
 					}
 
 					const result = await response.json();
-					document.getElementById("response").innerText = JSON.stringify(
-						result,
-						null,
-						2,
-					);
+					console.log("Response:", result);
+					alert("Заказ успешно отправлен!");
 				} catch (error) {
-					document.getElementById("response").innerText =
-						`Ошибка: ${error.message}`;
+					console.error("Error:", error.message);
+					alert("Ошибка при отправке заказа: " + error.message);
 				}
 			});
 	</script>
