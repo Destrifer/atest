@@ -1,0 +1,106 @@
+---
+// Form.astro
+const { vehicle } = Astro.props;
+---
+
+<form id="apiForm">
+	<label>
+		Телефон:
+		<input type="text" name="phone" value="+79099999009" required />
+	</label>
+	<br />
+	<label>
+		Имя:
+		<input type="text" name="name" value="Тест" required />
+	</label>
+	<br />
+	<label>
+		Фамилия:
+		<input type="text" name="surname" value="Тест" required />
+	</label>
+	<br />
+	<label>
+		Email:
+		<input type="email" name="email" value="test@test.com" required />
+	</label>
+	<br />
+	<label>
+		Дата и время начала:
+		<input
+			type="datetime-local"
+			name="pick_up_datetime"
+			value="2024-12-14T12:00"
+			required
+		/>
+	</label>
+	<br />
+	<label>
+		Дата и время завершения:
+		<input
+			type="datetime-local"
+			name="drop_off_datetime"
+			value="2024-12-21T10:00"
+			required
+		/>
+	</label>
+	<br />
+	<label>
+		Стоимость за день:
+		<input type="number" name="cost_per_day" value="1000" required />
+	</label>
+	<br />
+	<label>
+		ID пункта выдачи:
+		<input type="number" name="pick_up_location_id" value="82" required />
+	</label>
+	<br />
+	<label>
+		ID пункта возврата:
+		<input type="number" name="drop_off_location_id" value="82" required />
+	</label>
+	<br />
+	<label>
+		Итоговая стоимость:
+		<input type="number" name="cost_total" value="999" required />
+	</label>
+	<br />
+	<input type="hidden" name="vendor_vehicle_id" value={vehicle.data.id} />
+	<input type="hidden" name="vehicle_model" value={vehicle.data.model} />
+	<input
+		type="hidden"
+		name="vehicle_engine_type"
+		value={vehicle.data.engine_type}
+	/>
+	<input
+		type="hidden"
+		name="vehicle_engine_hp"
+		value={vehicle.data.engine_hp}
+	/>
+	<input
+		type="hidden"
+		name="vehicle_engine_capacity"
+		value={vehicle.data.engine_capacity}
+	/>
+	<input
+		type="hidden"
+		name="vehicle_transmission"
+		value={vehicle.data.transmission}
+	/>
+	<input
+		type="hidden"
+		name="vehicle_engine_hp"
+		value={vehicle.data.engine_hp}
+	/>
+	<input type="hidden" name="vehicle_year" value={vehicle.data.year} />
+	<input
+		type="hidden"
+		name="vehicle_rent_period_days"
+		value={vehicle.data.rent_period_days}
+	/>
+	<input
+		type="hidden"
+		name="vehicle_images"
+		value={vehicle.data.images[0].thumbnail}
+	/>
+	<button type="button" id="submitButton">Отправить</button>
+</form>

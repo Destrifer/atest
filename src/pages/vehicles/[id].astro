@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 import Form from "@components/Form.astro";
+import OrderForm from "@components/OrderForm.astro";
 
 const vehicles = await getCollection("apiCars");
 const { id } = Astro.params;
@@ -55,89 +56,7 @@ const description = `Взять напрокат автомобиль ${vehicle.
 				</div>
 
 				<div>
-					<form id="apiForm">
-						<label>
-							Телефон:
-							<input type="text" name="phone" value="+79099999009" required />
-						</label>
-						<br />
-						<label>
-							Имя:
-							<input type="text" name="name" value="Тест" required />
-						</label>
-						<br />
-						<label>
-							Фамилия:
-							<input type="text" name="surname" value="Тест" required />
-						</label>
-						<br />
-						<label>
-							Email:
-							<input type="email" name="email" value="test@test.com" required />
-						</label>
-						<br />
-						<label>
-							Дата и время начала:
-							<input
-								type="datetime-local"
-								name="pick_up_datetime"
-								value="2024-12-14T12:00"
-								required
-							/>
-						</label>
-						<br />
-						<label>
-							Дата и время завершения:
-							<input
-								type="datetime-local"
-								name="drop_off_datetime"
-								value="2024-12-21T10:00"
-								required
-							/>
-						</label>
-						<br />
-						<label>
-							ID автомобиля:
-							<input
-								type="text"
-								name="vendor_vehicle_id"
-								value="ff3e736e-0f24-11e7-8f4d-ac9e17b8d7a7"
-								required
-							/>
-						</label>
-						<br />
-						<label>
-							Стоимость за день:
-							<input type="number" name="cost_per_day" value="1000" required />
-						</label>
-						<br />
-						<label>
-							ID пункта выдачи:
-							<input
-								type="number"
-								name="pick_up_location_id"
-								value="82"
-								required
-							/>
-						</label>
-						<br />
-						<label>
-							ID пункта возврата:
-							<input
-								type="number"
-								name="drop_off_location_id"
-								value="82"
-								required
-							/>
-						</label>
-						<br />
-						<label>
-							Итоговая стоимость:
-							<input type="number" name="cost_total" value="999" required />
-						</label>
-						<br />
-						<button type="button" id="submitButton">Отправить</button>
-					</form>
+					<OrderForm vehicle={vehicle} />
 				</div>
 			</div>
 			<ul class="car-card grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -381,6 +300,10 @@ const description = `Взять напрокат автомобиль ${vehicle.
 			.getElementById("submitButton")
 			.addEventListener("click", async () => {
 				const form = document.getElementById("apiForm");
+				if (!(form instanceof HTMLFormElement)) {
+					console.error("Элемент формы не найден или имеет неверный тип.");
+					return;
+				}
 				const formData = new FormData(form);
 
 				// Функция для преобразования даты и времени в формат DD.MM.YYYY HH:mm
@@ -420,18 +343,16 @@ const description = `Взять напрокат автомобиль ${vehicle.
 						},
 						extras: {},
 						vehicle: {
-							model: "Datsun Mi-Do HB",
-							modification: "Promo",
-							engine_type: "Бензин",
-							engine_hp: "123",
-							engine_capacity: "1.6",
-							transmission: "AT",
-							year: "2015",
-							rent_period_days: "7",
+							model: formData.get("vehicle_model"),
+							engine_type: formData.get("vehicle_engine_type"),
+							engine_hp: formData.get("vehicle_engine_hp"),
+							engine_capacity: formData.get("vehicle_engine_capacity"),
+							transmission: formData.get("vehicle_transmission"),
+							year: formData.get("vehicle_year"),
+							rent_period_days: formData.get("vehicle_rent_period_days"),
 							images: [
 								{
-									thumbnail:
-										"https://mycarrental.ru/uploads/cars/arenda-mashiny-datsun-mi-do-hb-promo-400-310.jpg",
+									thumbnail: formData.get("vehicle_images"),
 								},
 							],
 						},
