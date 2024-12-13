@@ -104,3 +104,94 @@ const { vehicle } = Astro.props;
 	/>
 	<button type="button" id="submitButton">Отправить</button>
 </form>
+<script>
+	document
+		.getElementById("submitButton")
+		.addEventListener("click", async () => {
+			const form = document.getElementById("apiForm");
+			if (!(form instanceof HTMLFormElement)) {
+				console.error("Элемент формы не найден или имеет неверный тип.");
+				return;
+			}
+			const formData = new FormData(form);
+
+			// Функция для преобразования даты и времени в формат DD.MM.YYYY HH:mm
+			const formatDateTime = (dateTime) => {
+				const [date, time] = dateTime.split("T");
+				const [year, month, day] = date.split("-");
+				return `${day}.${month}.${year} ${time}`;
+			};
+
+			const data = {
+				accept: "1",
+				data: {
+					phone: formData.get("phone"),
+					name: formData.get("name"),
+					surname: formData.get("surname"),
+					email: formData.get("email"),
+					pick_up_datetime: formatDateTime(formData.get("pick_up_datetime")),
+					drop_off_datetime: formatDateTime(formData.get("drop_off_datetime")),
+					vendor_vehicle_id: formData.get("vendor_vehicle_id"),
+					cost_per_day: Number(formData.get("cost_per_day")),
+					pick_up_location_id: Number(formData.get("pick_up_location_id")),
+					drop_off_location_id: Number(formData.get("drop_off_location_id")),
+					currency: {
+						id: 1,
+						letter_code: "RUB",
+					},
+					cost_total: Number(formData.get("cost_total")),
+				},
+				full_data: JSON.stringify({
+					info: {
+						pick_up_location_id: Number(formData.get("pick_up_location_id")),
+						drop_off_location_id: Number(formData.get("drop_off_location_id")),
+					},
+					extras: {},
+					vehicle: {
+						model: formData.get("vehicle_model"),
+						engine_type: formData.get("vehicle_engine_type"),
+						engine_hp: formData.get("vehicle_engine_hp"),
+						engine_capacity: formData.get("vehicle_engine_capacity"),
+						transmission: formData.get("vehicle_transmission"),
+						year: formData.get("vehicle_year"),
+						rent_period_days: formData.get("vehicle_rent_period_days"),
+						images: [
+							{
+								thumbnail: formData.get("vehicle_images"),
+							},
+						],
+					},
+					equipment: {},
+				}),
+			};
+
+			// Выводим преобразованные значения в консоль
+			console.log("Formatted pick_up_datetime:", data.data.pick_up_datetime);
+			console.log("Formatted drop_off_datetime:", data.data.drop_off_datetime);
+
+			try {
+				const response = await fetch(
+					"https://mycarrental.ru/api/v1/order/store",
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: "Bearer ILup4Hh8B7degUc01nHx6js5",
+						},
+						body: JSON.stringify(data),
+					},
+				);
+
+				if (!response.ok) {
+					throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
+				}
+
+				const result = await response.json();
+				console.log("Response:", result);
+				alert("Заказ успешно отправлен!");
+			} catch (error) {
+				console.error("Error:", error.message);
+				alert("Ошибка при отправке заказа: " + error.message);
+			}
+		});
+</script>
