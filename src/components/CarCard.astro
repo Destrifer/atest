@@ -1,30 +1,30 @@
 ---
-const { car } = Astro.props;
+const { car } = Astro.props; // Ожидаем объект без вложения data
 import { Icon } from "astro-icon/components";
 import Button from "./Button.astro";
 ---
 
-<div class="car-card text-center" data-id={car.data.class_id}>
-	<a href={`/vehicles/${car.data.id}`} target="_blank"
+<div class="car-card text-center" data-id={car.class_id}>
+	<a href={`/vehicles/${car.id}`} target="_blank"
 		><img
-			src={car.data.images[0].image}
-			alt={car.data.model}
+			src={car.images[0]?.image}
+			alt={car.model}
 			decoding="async"
 			loading="lazy"
 		/></a
 	>
 	<div class="flex flex-col gap-2 text-xl pb-2">
-		<p class="font-bold text-2xl">{car.data.model}</p>
+		<p class="font-bold text-2xl">{car.model}</p>
 		<p>
-			Депозит: <strong>{car.data.deposit} ₽</strong>
+			Депозит: <strong>{car.deposit} ₽</strong>
 		</p>
 		<p>
-			Период аренды: <strong>{car.data.rent_period_days} дней</strong>
+			Период аренды: <strong>{car.rent_period_days || "не указан"} дней</strong>
 		</p>
 	</div>
 	<Button
-		title={`От ${car.data.rate_per_day} ₽`}
-		url={`/vehicles/${car.data.id}`}
+		title={`От ${car.rate_per_day} ₽`}
+		url={`/vehicles/${car.id}?from-id=${Astro.props.fromId || "10"}&to-id=${Astro.props.toId || "10"}&from-date=${Astro.props.fromDate || "2024-12-20"}&to-date=${Astro.props.toDate || "2024-12-28"}&promocode=${Astro.props.promocode || ""}`}
 		styleClass="order-button self-center text-2xl"
 	/>
 
@@ -32,22 +32,22 @@ import Button from "./Button.astro";
 		class="grid grid-cols-5 gap-2 items-center justify-center p-2 border-t-2 text-sm border-black mt-4"
 	>
 		<p class="flex items-center justify-center">
-			<Icon name="mdi:car" class="mr-1" />{car.data.year}
+			<Icon name="mdi:car" class="mr-1" />{car.year || "не указан"}
 		</p>
 		<p class="flex items-center justify-center">
-			<Icon name="mdi:engine" class="mr-1" />{car.data.engine_capacity}
+			<Icon name="mdi:engine" class="mr-1" />{car.engine_capacity || "—"}
 		</p>
 		<p class="flex items-center justify-center">
 			<Icon name="mdi:car-manual-transmission" class="mr-1" />{
-				car.data.transmission
+				car.transmission || "—"
 			}
 		</p>
 		<p class="flex items-center justify-center">
-			<Icon name="mdi:car-seat" class="mr-1" />{car.data.seats}
+			<Icon name="mdi:car-seat" class="mr-1" />{car.seats || "—"}
 		</p>
 		<p class="flex items-center justify-center">
 			<Icon name="mdi:color" class="mr-1" />
-			<span class="color-indicator" title={car.data.color}></span>
+			<span class="color-indicator" title={car.color || "—"}></span>
 		</p>
 	</div>
 </div>

@@ -18,7 +18,31 @@ const cars = await getCollection("apiCars");
 	</div>
 
 	<div class="cars-grid mx-auto">
-		{cars.map((car) => <CarCard car={car} />)}
+		{
+			cars.map((car) => (
+				<CarCard
+					car={{
+						id: car.data.id,
+						model: car.data.model,
+						year: car.data.year,
+						rate_per_day: car.data.rate_per_day,
+						deposit: car.data.deposit,
+						images: car.data.images,
+						color: car.data.color,
+						transmission: car.data.transmission,
+						seats: car.data.seats,
+						engine_capacity: car.data.engine_capacity,
+						class_id: car.data.class_id,
+						rent_period_days: car.data.rent_period_days,
+					}}
+					fromId="10"
+					toId="10"
+					fromDate="2024-12-20"
+					toDate="2024-12-28"
+					promocode=""
+				/>
+			))
+		}
 	</div>
 </div>
 

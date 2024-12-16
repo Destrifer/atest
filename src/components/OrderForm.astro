@@ -1,6 +1,7 @@
 ---
 // Form.astro
-const { vehicle } = Astro.props;
+const { vehicle, fromDate, toDate, fromId, toId } = Astro.props;
+console.log("Пропсы:", fromId, toId);
 ---
 
 <form id="apiForm">
@@ -27,20 +28,20 @@ const { vehicle } = Astro.props;
 	<label>
 		Дата и время начала:
 		<input
-			type="datetime-local"
+			type="text"
 			name="pick_up_datetime"
-			value="2024-12-14T12:00"
-			required
+			value={`${fromDate} 12:00`}
+			readonly
 		/>
 	</label>
 	<br />
 	<label>
 		Дата и время завершения:
 		<input
-			type="datetime-local"
+			type="text"
 			name="drop_off_datetime"
-			value="2024-12-21T10:00"
-			required
+			value={`${toDate} 10:00`}
+			readonly
 		/>
 	</label>
 	<br />
@@ -51,56 +52,49 @@ const { vehicle } = Astro.props;
 	<br />
 	<label>
 		ID пункта выдачи:
-		<input type="number" name="pick_up_location_id" value="82" required />
+		<input type="number" name="pick_up_location_id" value={fromId} readonly />
 	</label>
 	<br />
 	<label>
 		ID пункта возврата:
-		<input type="number" name="drop_off_location_id" value="82" required />
+		<input type="number" name="drop_off_location_id" value={toId} readonly />
 	</label>
 	<br />
 	<label>
 		Итоговая стоимость:
-		<input type="number" name="cost_total" value="999" required />
+		<input
+			type="number"
+			name="cost_total"
+			value={vehicle.rate_subtotal}
+			required
+		/>
 	</label>
 	<br />
-	<input type="hidden" name="vendor_vehicle_id" value={vehicle.data.id} />
-	<input type="hidden" name="vehicle_model" value={vehicle.data.model} />
-	<input
-		type="hidden"
-		name="vehicle_engine_type"
-		value={vehicle.data.engine_type}
-	/>
-	<input
-		type="hidden"
-		name="vehicle_engine_hp"
-		value={vehicle.data.engine_hp}
-	/>
+	<input type="hidden" name="vendor_vehicle_id" value={vehicle.id} />
+	<input type="hidden" name="vehicle_model" value={vehicle.model} />
+	<input type="hidden" name="vehicle_engine_type" value={vehicle.engine_type} />
+	<input type="hidden" name="vehicle_engine_hp" value={vehicle.engine_hp} />
 	<input
 		type="hidden"
 		name="vehicle_engine_capacity"
-		value={vehicle.data.engine_capacity}
+		value={vehicle.engine_capacity}
 	/>
 	<input
 		type="hidden"
 		name="vehicle_transmission"
-		value={vehicle.data.transmission}
+		value={vehicle.transmission}
 	/>
-	<input
-		type="hidden"
-		name="vehicle_engine_hp"
-		value={vehicle.data.engine_hp}
-	/>
-	<input type="hidden" name="vehicle_year" value={vehicle.data.year} />
+	<input type="hidden" name="vehicle_engine_hp" value={vehicle.engine_hp} />
+	<input type="hidden" name="vehicle_year" value={vehicle.year} />
 	<input
 		type="hidden"
 		name="vehicle_rent_period_days"
-		value={vehicle.data.rent_period_days}
+		value={vehicle.rent_period_days}
 	/>
 	<input
 		type="hidden"
 		name="vehicle_images"
-		value={vehicle.data.images[0].thumbnail}
+		value={vehicle.images[0].thumbnail}
 	/>
 	<button type="button" id="submitButton">Отправить</button>
 </form>
@@ -115,13 +109,7 @@ const { vehicle } = Astro.props;
 			}
 			const formData = new FormData(form);
 
-			// Функция для преобразования даты и времени в формат DD.MM.YYYY HH:mm
-			const formatDateTime = (dateTime) => {
-				const [date, time] = dateTime.split("T");
-				const [year, month, day] = date.split("-");
-				return `${day}.${month}.${year} ${time}`;
-			};
-
+			console.log(formData.get("pick_up_datetime"));
 			const data = {
 				accept: "1",
 				data: {
@@ -129,8 +117,8 @@ const { vehicle } = Astro.props;
 					name: formData.get("name"),
 					surname: formData.get("surname"),
 					email: formData.get("email"),
-					pick_up_datetime: formatDateTime(formData.get("pick_up_datetime")),
-					drop_off_datetime: formatDateTime(formData.get("drop_off_datetime")),
+					pick_up_datetime: formData.get("pick_up_datetime"),
+					drop_off_datetime: formData.get("drop_off_datetime"),
 					vendor_vehicle_id: formData.get("vendor_vehicle_id"),
 					cost_per_day: Number(formData.get("cost_per_day")),
 					pick_up_location_id: Number(formData.get("pick_up_location_id")),

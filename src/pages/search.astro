@@ -1,9 +1,44 @@
 ---
-import { getCollection } from "astro:content";
-const cars = await getCollection("apiCars");
 import Layout from "../layouts/Layout.astro";
 import CarCard from "@components/CarCard.astro";
+import { formatDateForAPI } from "../utils/utils";
 
+// Извлекаем параметры из запроса
+const { request } = Astro;
+const url = new URL(request.url);
+
+const fromId = url.searchParams.get("from-id") || "10";
+const toId = url.searchParams.get("to-id") || "10";
+const fromDate = formatDateForAPI(
+	url.searchParams.get("from-date") || "2024-12-20",
+);
+const toDate = formatDateForAPI(
+	url.searchParams.get("to-date") || "2024-12-28",
+);
+const promocode = url.searchParams.get("promocode") || "";
+
+// Запрашиваем данные от API
+const apiUrl = `https://new.mycarrental.ru/api/v2/search_cars?from-id=${fromId}&to-id=${toId}&from-date=${fromDate}&to-date=${toDate}&from-time=12%3A00&to-time=12%3A00&promocode=${promocode}`;
+const response = await fetch(apiUrl);
+
+if (!response.ok) {
+	throw new Error("Не удалось загрузить данные автомобилей.");
+}
+
+// Данные автомобилей
+const data = await response.json();
+const cars = data.vehicles || [];
+
+// Перечень классов автомобилей
+const carClasses = [
+	{ id: "1", name: "Комфорт класс" },
+	{ id: "2", name: "Бизнес" },
+	{ id: "4", name: "Кроссоверы" },
+	{ id: "6", name: "Внедорожники" },
+	{ id: "7", name: "Минивены" },
+];
+
+// SEO
 const h1 = "Прокат авто в Крыму без водителя";
 const title =
 	"Парк авто - аренда авто без водителя | Аренда авто в Крыму Car on Time";
@@ -13,36 +48,59 @@ const description =
 
 <Layout title={title} description={description} h1={h1}>
 	<div class="container mx-auto">
-		<!-- Фильтр по классам авто с кнопками -->
+		<!-- Фильтр по классам авто -->
 		<div class="filter-section m-4 flex flex-wrap gap-2 justify-center">
-			<button class="tab-button" data-id="1">Комфорт класс</button>
-			<button class="tab-button" data-id="2">Бизнес</button>
-			<!-- Убрана кнопка с data-id="3" -->
-			<button class="tab-button" data-id="4">Кроссоверы</button>
-			<button class="tab-button" data-id="6">Внедорожники</button>
-			<button class="tab-button" data-id="7">Минивены</button>
+			{
+				carClasses.map((carClass) => (
+					<button class="tab-button" data-id={carClass.id}>
+						{carClass.name}
+					</button>
+				))
+			}
 		</div>
 
-		<!-- Контейнер для карточек и сообщения -->
+		<!-- Карточки автомобилей -->
 		<div class="cars-grid p-4" id="cars-container">
 			{
 				cars.length > 0 ? (
-					// Фильтруем автомобили, исключая те, у которых class_id равен 3
 					cars
-						.filter((car) => car.data.class_id !== 3 && car.data.class_id !== 5)
-						.map((car) => <CarCard car={car} data-id={car.data.class_id} />)
+						.filter((car) => car.class_id !== 3 && car.class_id !== 5) // Исключаем определённые классы
+						.map((car) => (
+							<CarCard
+								car={{
+									id: car.id,
+									model: car.model,
+									year: car.year,
+									rate_per_day: car.rate_per_day,
+									deposit: car.deposit,
+									images: car.images,
+									color: car.color,
+									transmission: car.transmission,
+									seats: car.seats,
+									engine_capacity: car.engine_capacity,
+									class_id: car.class_id,
+									rent_period_days: car.rent_period_days,
+								}}
+								fromId={fromId}
+								toId={toId}
+								fromDate={fromDate}
+								toDate={toDate}
+								promocode={promocode}
+								data-id={car.class_id}
+							/>
+						))
 				) : (
-					<p class="mx-4">Машин больше нет</p>
+					<p class="mx-4">Машин по вашему запросу нет.</p>
 				)
 			}
 		</div>
+
 		<p id="no-cars-message" style="display: none;" class="mx-4">
 			Машин выбранного класса нет
 		</p>
 	</div>
 </Layout>
 
-<!-- Добавляем стили -->
 <style>
 	.cars-grid {
 		display: grid;
@@ -65,14 +123,12 @@ const description =
 		color: white;
 		cursor: pointer;
 	}
-	/* Стили для активного таба */
 	.tab-button.active {
 		background-color: #dc2626;
 		color: white;
 	}
 </style>
 
-<!-- Добавляем скрипт для фильтрации и обработки URL параметров -->
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
 		const filterButtons = document.querySelectorAll(".tab-button");
@@ -91,38 +147,21 @@ const description =
 					selectedClasses.length === 0 ||
 					selectedClasses.includes(carClassId)
 				) {
-					(car as HTMLElement).style.display = "flex";
+					car.style.display = "flex";
 					visibleCars++;
 				} else {
-					(car as HTMLElement).style.display = "none";
+					car.style.display = "none";
 				}
 			});
 
-			// Показываем/скрываем сообщение
 			noCarsMessage.style.display = visibleCars === 0 ? "block" : "none";
 		}
 
-		// Считываем параметр class из URL
-		const urlParams = new URLSearchParams(window.location.search);
-		const initialClass = urlParams.get("class");
-
-		// Если есть параметр class, активируем соответствующую кнопку и фильтруем
-		if (initialClass) {
-			selectedClasses.push(initialClass);
-			filterButtons.forEach((button) => {
-				if (button.getAttribute("data-id") === initialClass) {
-					button.classList.add("active");
-				}
-			});
-			filterCars();
-		}
-
-		// Добавляем обработчик клика для кнопок фильтров
+		// Обработчики клика по кнопкам
 		filterButtons.forEach((button) => {
 			button.addEventListener("click", function () {
 				const classId = this.getAttribute("data-id");
 
-				// Добавляем или удаляем класс из выбранных
 				if (selectedClasses.includes(classId)) {
 					selectedClasses = selectedClasses.filter((id) => id !== classId);
 					this.classList.remove("active");

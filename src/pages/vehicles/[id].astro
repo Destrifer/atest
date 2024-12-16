@@ -1,298 +1,172 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
-import Form from "@components/Form.astro";
 import OrderForm from "@components/OrderForm.astro";
+import { formatDateForAPI } from "../../utils/utils";
 
-const vehicles = await getCollection("apiCars");
 const { id } = Astro.params;
-const vehicle = vehicles.find((v) => v.data.id === id);
+const url = new URL(Astro.request.url);
 
-let h1 = `${vehicle.data.model} - Прокат автомобиля в Крыму`;
-const title = `Аренда авто ${vehicle.data.model} в Крыму Car on Time`;
-const description = `Взять напрокат автомобиль ${vehicle.data.model}, Крым компания CAR ON TIME. Аренда - это удобный вариант передвижения по Крыму.`;
+// Дефолтные параметры для API
+const fromId = url.searchParams.get("from-id") || "10";
+const toId = url.searchParams.get("to-id") || "10";
+const fromDate = url.searchParams.get("from-date") || "2024-12-20";
+const toDate = url.searchParams.get("to-date") || "2024-12-28";
+const promocode = url.searchParams.get("promocode") || "";
+
+// Запрос данных из API
+const apiUrl = `https://new.mycarrental.ru/api/v2/search_cars?from-id=${fromId}&to-id=${toId}&from-date=${fromDate}&to-date=${toDate}&from-time=12%3A00&to-time=12%3A00&promocode=${promocode}`;
+console.log(apiUrl);
+let vehicle;
+
+try {
+	const response = await fetch(apiUrl);
+
+	if (!response.ok) {
+		throw new Error("Не удалось загрузить данные автомобиля.");
+	}
+
+	const data = await response.json();
+	vehicle = data.vehicles.find((v) => v.id === id);
+
+	if (!vehicle) {
+		throw new Error("Автомобиль с указанным ID не найден.");
+	}
+} catch (error) {
+	console.error("Ошибка:", error.message);
+	throw new Error("Ошибка загрузки данных автомобиля.");
+}
+
+// SEO
+const h1 = `${vehicle.model} - Прокат автомобиля в Крыму`;
+const title = `Аренда авто ${vehicle.model} в Крыму Car on Time`;
+const description = `Взять напрокат автомобиль ${vehicle.model}, Крым компания CAR ON TIME. Аренда - это удобный вариант передвижения по Крыму.`;
 ---
 
 <Layout title={title} description={description} h1={h1}>
-	<!-- <div
-		class="grid gap-4 p-2 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] mx-auto container"
-	> -->
-	<div class="grid gap-4 p-2 mx-auto container">
-		<div class="main-block">
-			<div class="flex flex-wrap 2xl:flex-nowrap m-2 gap-2">
-				<div class="embla">
-					<div class="embla__viewport">
-						<div class="embla__container">
-							<div class="embla__slide">
-								<img src={vehicle.data.images[0].image} alt="Main car image" />
-							</div>
-							{
-								vehicle.data.real_photos && vehicle.data.real_photos.length > 0
-									? vehicle.data.real_photos.map((photo) => (
-											<div class="embla__slide">
-												<img
-													src={photo.replace("_w200", "")}
-													alt="Real photo"
-												/>
-											</div>
-										))
-									: ""
-							}
+	<div class="container mx-auto grid gap-4 p-4">
+		<!-- Основной блок с галереей -->
+		<div class="flex flex-wrap 2xl:flex-nowrap m-2 gap-4">
+			<div class="embla">
+				<div class="embla__viewport">
+					<div class="embla__container">
+						<div class="embla__slide">
+							<img
+								src={vehicle.images[0]?.image}
+								alt={`Изображение ${vehicle.model}`}
+							/>
 						</div>
+						{
+							vehicle.real_photos?.map((photo) => (
+								<div class="embla__slide">
+									<img
+										src={photo.replace("_w200", "")}
+										alt="Реальное фото автомобиля"
+									/>
+								</div>
+							))
+						}
 					</div>
-					<button
-						class="embla__button embla__button--prev"
-						aria-label="Previous slide"
-					>
-						<span class="embla__icon"></span>
-					</button>
-					<button
-						class="embla__button embla__button--next"
-						aria-label="Next slide"
-					>
-						<span class="embla__icon"></span>
-					</button>
 				</div>
-
-				<div>
-					<OrderForm vehicle={vehicle} />
-				</div>
+				<button
+					class="embla__button embla__button--prev"
+					aria-label="Предыдущий слайд"
+				>
+					<span class="embla__icon"></span>
+				</button>
+				<button
+					class="embla__button embla__button--next"
+					aria-label="Следующий слайд"
+				>
+					<span class="embla__icon"></span>
+				</button>
 			</div>
-			<ul class="car-card grid grid-cols-1 md:grid-cols-2 gap-4">
-				<li>Класс:</li>
-				<li>Год выпуска: <strong>{vehicle.data.year}</strong></li>
-				<li>Двигатель: <strong>{vehicle.data.engine_capacity}</strong></li>
-				<li>Коробка передач: <strong>{vehicle.data.transmission}</strong></li>
-				<li>Топливо: <strong>{vehicle.data.engine_type}</strong></li>
-				<li>Мест: <strong>{vehicle.data.seats}</strong></li>
-				<li>Цвет: <strong>{vehicle.data.color}</strong></li>
-				<li>
-					Минимально дней аренды: <strong
-						>{vehicle.data.rent_period_days}</strong
-					>
-				</li>
-				<li>Общая стоимость: <strong>{vehicle.data.rate_subtotal}</strong></li>
-				<li>Стоимость в день: <strong>{vehicle.data.rate_per_day}</strong></li>
-				<li>Депозит: <strong>{vehicle.data.deposit}</strong></li>
-			</ul>
-
-			<h2 class="py-4 font-black text-xl uppercase m-2">
-				Дополнительные услуги:
-			</h2>
-			<div class="md:columns-2 add m-2">
-				<p>Навигатор <strong>150 ₽ в сутки</strong></p>
-				<p>Детское кресло <strong>200 ₽ в сутки</strong></p>
-				<p>Набор автомобилиста <strong>Бесплатно</strong></p>
-				<p>Отмена залога и франшизы <strong>уточняйте у менеджера</strong></p>
-				<p>Wi-Fi Интернет <strong>300 ₽ в сутки</strong></p>
-				<p>Мойка кузова автомобиля <strong>500 ₽</strong></p>
-				<p>Мойка салона автомобиля <strong>500 ₽</strong></p>
-				<p>Химчистка салона автомобиля <strong>3000 ₽</strong></p>
-				<p>Полировка кузова автомобиля <strong>5000 ₽</strong></p>
-			</div>
-			<div class="">
-				<h2 class="py-4 font-black text-xl uppercase">Онлайн-заявка:</h2>
-				<Form />
+			<div>
+				<OrderForm
+					vehicle={vehicle}
+					fromDate={fromDate}
+					toDate={toDate}
+					fromId={fromId}
+					toId={toId}
+				/>
 			</div>
 		</div>
-		<div class="sidebar-column">
-			<div class="inner m-2">
-				<h2 class="py-4 font-black text-xl uppercase">Аренда автомобиля</h2>
-				<p class="gbox">
-					Внимание! Стоимость аренды данного автомобиля на интересующие Вас даты
-					уточняйте у менеджеров отдела бронирования!!!
-				</p>
-				<h2 class="py-4 font-black text-xl uppercase">Тарифы</h2>
-				<table class="tarifs">
-					<tr>
-						<td>Аренда</td>
-						<td>Стоимость</td>
-					</tr>
-					<tr>
-						<td>1 сутки</td>
-						<td>{vehicle.data.rate_per_day} руб/сутки</td>
-					</tr>
-					<tr>
-						<td>от 3 до {vehicle.data.rent_period_days} суток</td>
-						<td>{vehicle.data.rate_subtotal} руб/сутки</td>
-					</tr>
-					<tr>
-						<td>от 7 суток и более</td>
-						<td>По договеренности</td>
-					</tr>
-				</table>
-				<h2 class="py-4 font-black text-xl uppercase">Доступные цвета</h2>
-				<p>{vehicle.data.color}</p>
-			</div>
-			<div class="inner m-2">
-				<h2 class="py-4 font-black text-xl uppercase">Условия аренды</h2>
-				<div class="">
-					<strong>Возраст:</strong> с 22 лет<br />
-					<strong>Стаж:</strong> не менее 3 лет<br />
-					<strong>Залог:</strong> от 5 000 ₽
-				</div>
-				<h2 class="py-4 font-black text-xl uppercase">Необходимые документы</h2>
-				<strong>Для граждан РФ:</strong> Паспорт РФ, действующая прописка, Водительское
-				удостоверение<br />
-				<strong>Для иностранных граждан:</strong> Заграничный паспорт, Водительское
-				удостоверение международного образца
-				<h2 class="py-4 font-black text-xl uppercase">
-					Договор аренды автомобиля
-				</h2>
-				<ul>
-					<li>
-						<Icon name="mdi:download" class="inline-block mr-2" /><a
-							href="/doc/dogovor_arend_avtomobilya_bez_voditelya_dlya_fizlits.docx"
-							>Договор аренды автомобиля без водителя для физлиц (docx) /
-							35.20kb
-						</a>
-					</li>
-					<li>
-						<Icon name="mdi:download" class="inline-block mr-2" /><a
-							href="/doc/dogovor_arendy_avtomobilya_bez_voditelya_dlya_yurlits.docx"
-							>Договор аренды автомобиля без водителя для юрлиц (docx) / 43.20kb
-						</a>
-					</li>
-					<li>
-						<Icon name="mdi:download" class="inline-block mr-2" /><a
-							href="/doc/dop_soglashenie.docx"
-							>Дополнительное соглашение к договору (docx) / 23.90kb
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div class="inner m-2">
-				<h2 class="py-4 font-black text-xl uppercase">Условия аренды</h2>
-				<strong>Возраст:</strong> с 22 лет<br />
-				<strong>Стаж:</strong> не менее 3 лет<br />
-				<strong>Залог:</strong> от 5 000 ₽
-				<h2 class="py-4 font-black text-xl uppercase">Поддержка</h2>
-				<Icon name="mdi:phone" class="inline-block mr-2" size="24" />
-				<strong>+7 978 955 60 60</strong><br />
-				<Icon name="mdi:whatsapp" class="inline-block mr-2" size="24" />
-				<strong>+7 978 955 60 60</strong><br />
-				<Icon name="mdi:email" class="inline-block mr-2" size="24" />
-				<strong>info@car-on-time.ru</strong>
-			</div>
+
+		<!-- Характеристики автомобиля -->
+		<ul class="car-details grid grid-cols-1 md:grid-cols-2 gap-4">
+			<li><strong>Класс:</strong> {vehicle.class_id}</li>
+			<li><strong>Год выпуска:</strong> {vehicle.year}</li>
+			<li><strong>Двигатель:</strong> {vehicle.engine_capacity}</li>
+			<li><strong>Коробка передач:</strong> {vehicle.transmission}</li>
+			<li><strong>Топливо:</strong> {vehicle.engine_type}</li>
+			<li><strong>Мест:</strong> {vehicle.seats}</li>
+			<li><strong>Цвет:</strong> {vehicle.color}</li>
+			<li><strong>Депозит:</strong> {vehicle.deposit} ₽</li>
+			<li>
+				<strong>Стоимость аренды за сутки:</strong>
+				{vehicle.rate_per_day} ₽
+			</li>
+		</ul>
+
+		<!-- Дополнительные услуги -->
+		<div class="additional-services">
+			<h2 class="py-4 font-black text-xl uppercase">Дополнительные услуги:</h2>
+			<ul>
+				<li>Навигатор: 150 ₽ в сутки</li>
+				<li>Детское кресло: 200 ₽ в сутки</li>
+				<li>Wi-Fi Интернет: 300 ₽ в сутки</li>
+				<li>Мойка кузова автомобиля: 500 ₽</li>
+			</ul>
 		</div>
 	</div>
-	<style>
-		.gbox {
-			background: #44bb6e;
-			outline: 1px solid white;
-			outline-offset: -20px;
-			padding: 40px;
-			color: white;
-		}
-		.tarifs {
-			border-left: 1px solid #ddd;
-			border-bottom: 1px solid #ddd;
-			width: 100%;
-		}
-		.tarifs td {
-			border-top: 1px solid #ddd;
-			padding: 10px;
-			border-right: 1px solid #ddd;
-		}
-		.car-card {
-			width: 100%;
-			min-width: 200px;
-		}
-		.car-card li {
-			display: flex;
-			gap: 10px;
-			justify-content: space-between;
-			margin-left: 25px;
-			margin-top: 10px;
-			position: relative;
-			border-bottom: 1px solid #ddd;
-		}
-		.car-card li::before {
-			content: "✔";
-			position: absolute;
-			left: -25px;
-			top: 5px;
-			width: 18px;
-			height: 18px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: #ccffcc;
-			border-radius: 50%;
-			font-size: 0.5em;
-		}
-		.add p {
-			display: flex;
-			gap: 10px;
-			justify-content: space-between;
-		}
-		.embla {
-			position: relative;
-			max-width: 800px;
-			width: 100%;
-			align-self: flex-start;
-		}
-		.embla__viewport {
-			overflow: hidden;
-			width: 100%;
-		}
-		.embla__container {
-			display: flex;
-		}
-		.embla__slide {
-			min-width: 100%;
-			position: relative;
-		}
-		.embla__button {
-			position: absolute;
-			top: 50%;
-			transform: translateY(-50%);
-			width: 3rem;
-			height: 3rem;
-			border: none;
-			background-color: rgba(0, 0, 0, 0.5);
-			color: white;
-			cursor: pointer;
-			border-radius: 50%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-		.embla__button--prev {
-			left: 1rem;
-		}
-		.embla__button--next {
-			right: 1rem;
-		}
-		.embla__icon::before {
-			content: "⏴"; /* Стрелка для кнопки "назад" */
-		}
 
-		.embla__button--next .embla__icon::before {
-			content: "⏵"; /* Стрелка для кнопки "вперед" */
-		}
-	</style>
-
-	<script>
-		// Dynamically import Embla Carousel only on the client
-		document.addEventListener("DOMContentLoaded", async () => {
-			const EmblaCarousel = (await import("embla-carousel")).default;
-			const emblaNode = document.querySelector(
-				".embla__viewport",
-			) as HTMLElement; // Cast as HTMLElement
-			const embla = EmblaCarousel(emblaNode, {
-				align: "center",
-				loop: true,
-			});
-
-			document
-				.querySelector(".embla__button--prev")!
-				.addEventListener("click", () => embla.scrollPrev());
-
-			document
-				.querySelector(".embla__button--next")!
-				.addEventListener("click", () => embla.scrollNext());
-		});
-	</script>
+	<!-- Стандартный текст с условиями -->
+	<div class="conditions">
+		<h2 class="py-4 font-black text-xl uppercase">Условия аренды:</h2>
+		<p>Возраст: с 22 лет</p>
+		<p>Стаж: от 3 лет</p>
+		<p>Залог: от 5 000 ₽</p>
+	</div>
 </Layout>
+
+<style>
+	.car-details li {
+		border-bottom: 1px solid #ddd;
+		padding: 8px 0;
+	}
+
+	.embla__button {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 3rem;
+		height: 3rem;
+		background: rgba(0, 0, 0, 0.5);
+		color: white;
+		border: none;
+		cursor: pointer;
+		border-radius: 50%;
+	}
+
+	.embla__button--prev {
+		left: 1rem;
+	}
+
+	.embla__button--next {
+		right: 1rem;
+	}
+</style>
+
+<script>
+	document.addEventListener("DOMContentLoaded", async () => {
+		const EmblaCarousel = (await import("embla-carousel")).default;
+		const emblaNode = document.querySelector(".embla__viewport");
+		const embla = EmblaCarousel(emblaNode, { loop: true });
+		document
+			.querySelector(".embla__button--prev")
+			.addEventListener("click", () => embla.scrollPrev());
+		document
+			.querySelector(".embla__button--next")
+			.addEventListener("click", () => embla.scrollNext());
+	});
+</script>
